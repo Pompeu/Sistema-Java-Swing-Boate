@@ -5,8 +5,6 @@
  */
 package com.solutions.pompeu.model;
 
-import javax.swing.JTextField;
-
 /**
  *
  * @author Pompeu
@@ -37,8 +35,6 @@ public class Usuario {
         this.telefone = telefone;
         this.cpf = cpf;
     }
-
-    
 
     public long getId() {
         return id;
@@ -94,6 +90,14 @@ public class Usuario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", nome=" + nome
+                + ", login=" + login + ", senha=" + senha
+                + ", funcao=" + funcao + ", telefone=" + telefone
+                + ", cpf=" + cpf + '}';
     }
 
 }

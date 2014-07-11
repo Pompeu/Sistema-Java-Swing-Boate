@@ -5,10 +5,10 @@
  */
 package com.solutions.pompeu.jdbc;
 
-import com.solutions.pompeu.jdbc.Conectar;
 import com.solutions.pompeu.model.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -20,12 +20,15 @@ public class UsuarioDao {
 
     protected Connection con = Conectar.conect();
     protected PreparedStatement preparar;
-
+    /**
+     * esse função faz cadstro de usuarios no banco de dados
+     * @param usu 
+     */
     public void cadUsuario(Usuario usu) {
 
         try {
             String sql = "INSERT INTO USUARIO(nome,login,senha,funcao,telefone,cpf) VALUES (?,?,md5(?),?,?,?)";
-            
+
             preparar = con.prepareStatement(sql);
             preparar.setString(1, usu.getNome());
             preparar.setString(2, usu.getLogin());
@@ -40,5 +43,36 @@ public class UsuarioDao {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
+    /**
+     * essa função faz o login com banco de dados
+     * @param usu
+     * @return 
+     */
+    public Usuario logar(Usuario usu) {
+        Usuario usuLogar = null;
+        try {
+            String sql = "SELECT * FROM USUARIO WHERE LOGIN = ? AND SENHA = md5(?)";
 
+            preparar = con.prepareStatement(sql);
+            preparar.setString(1, usu.getLogin());
+            preparar.setString(2, usu.getSenha());
+            ResultSet resultado = preparar.executeQuery();
+
+            if (resultado.next()) {
+                usuLogar = new Usuario();
+                usuLogar.setId(resultado.getInt("id"));
+                usuLogar.setNome(resultado.getString("nome"));
+                usuLogar.setLogin(resultado.getString("login"));
+                usuLogar.setSenha(resultado.getString("senha"));
+                usuLogar.setFuncao(resultado.getString("funcao"));
+                usuLogar.setTelefone(resultado.getString("telefone"));
+                usuLogar.setCpf(resultado.getString("cpf"));
+                //JOptionPane.showMessageDialog(null,"Logado");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
+        return usuLogar;
+    }
 }
