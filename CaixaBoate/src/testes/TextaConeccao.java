@@ -5,7 +5,9 @@
  */
 package testes;
 
-import com.solutions.pompeu.jdbc.UsuarioDao;
+import com.solutions.pompeu.model.Ingresso;
+import com.solutions.pompeu.model.IngressoDAO;
+import com.solutions.pompeu.model.UsuarioDAO;
 import com.solutions.pompeu.model.Usuario;
 
 /**
@@ -15,9 +17,23 @@ import com.solutions.pompeu.model.Usuario;
 public class TextaConeccao {
 
     public static void main(String[] args) {
-             
+       ingressoUpdate();
+    }
+
+    public static void cadUser() {
         Usuario usuario = new Usuario("Pompeu", "552525");
-        UsuarioDao usu = new UsuarioDao();
+        UsuarioDAO usu = new UsuarioDAO();
         System.out.println(usu.logar(usuario));
     }
-}
+    public static void cadIngresso(){
+        Ingresso ing = new Ingresso("Camarote Vip",50,"Fanatasy Fest");
+        IngressoDAO ingDao = new IngressoDAO();
+        ingDao.cadIngressos(ing);
+    }
+    public static void ingressoUpdate(){
+        Ingresso ing =  new Ingresso("Pista", 15, "Fantasy Fest");
+        IngressoDAO ingDao = new IngressoDAO();
+        ingDao.precoUpdate(ing);
+            
+    }
+}   
