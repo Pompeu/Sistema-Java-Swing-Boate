@@ -5,7 +5,6 @@
  */
 package com.solutions.pompeu.view;
 
-import com.solutions.pompeu.control.AbrirTelas;
 import com.solutions.pompeu.model.Usuario;
 import com.solutions.pompeu.model.UsuarioDAO;
 import java.util.Arrays;
@@ -15,17 +14,20 @@ import javax.swing.JOptionPane;
  *
  * @author Pompeu
  */
-public class CadastroUsuario extends javax.swing.JFrame {
+public class CadastroUsuario extends MainClass {
 
     /**
      * Creates new form CadastroUsuario
      */
-   // Principal princiapal = new Principal();
     public CadastroUsuario() {
-        super("Cacadstro de Usuarios");
         initComponents();
         //centralizando janela
         this.setLocationRelativeTo(null);
+    }
+
+    public CadastroUsuario(Principal principal) {
+        this();
+        this.princiapal = principal;
     }
 
     /**
@@ -249,15 +251,15 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         this.dispose();
-        Principal p = new Principal();
-        p.setVisible(true);
+        princiapal.setEnabled(true);
+        princiapal.toFront();
+
     }//GEN-LAST:event_exitMenuItemActionPerformed
-    
+
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         // TODO add your handling code here:
         /**
-         * usando Array.esquals para comprar as senhas
-         * que vem dos textfilds
+         * usando Array.esquals para comprar as senhas que vem dos textfilds
          */
         if (!Arrays.equals(tfSenha.getPassword(), tfSenha2.getPassword())) {
             JOptionPane.showMessageDialog(this, "As Senha Não Conferem ou esta Vasia");
@@ -270,17 +272,18 @@ public class CadastroUsuario extends javax.swing.JFrame {
             UsuarioDAO usuDao = new UsuarioDAO();
             usuDao.cadUsuario(usu);
         }
-        
+
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-           jbSairActionPerformed(evt);
+        jbCadastrarActionPerformed(evt);
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void jbSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSairActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        AbrirTelas.abrirPrincipal();
+        princiapal.setEnabled(true);
+        princiapal.toFront();
     }//GEN-LAST:event_jbSairActionPerformed
 
     /**

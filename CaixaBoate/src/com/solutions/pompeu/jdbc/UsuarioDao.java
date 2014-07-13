@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.solutions.pompeu.jdbc;
+package com.solutions.pompeu.model;
 
-import com.solutions.pompeu.model.Usuario;
+import com.solutions.pompeu.jdbc.Conectar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Pompeu
  */
-public class UsuarioDao {
+public class UsuarioDAO {
 
     protected Connection con = Conectar.conect();
     protected PreparedStatement preparar;
@@ -67,7 +67,7 @@ public class UsuarioDao {
                 usuLogar.setFuncao(resultado.getString("funcao"));
                 usuLogar.setTelefone(resultado.getString("telefone"));
                 usuLogar.setCpf(resultado.getString("cpf"));
-                //JOptionPane.showMessageDialog(null,"Logado");
+                JOptionPane.showMessageDialog(null,"Bem Vindo \n"+usuLogar.getNome()+"\n"+usuLogar.getFuncao());
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
