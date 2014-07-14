@@ -25,7 +25,6 @@ public class CadastroProdutos extends MainClass {
     public CadastroProdutos() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
     }
 
     public CadastroProdutos(Principal principal) {
