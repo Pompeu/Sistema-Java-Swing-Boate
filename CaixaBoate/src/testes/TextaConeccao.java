@@ -9,8 +9,12 @@ import com.solutions.pompeu.model.CartaoConsumacao;
 import com.solutions.pompeu.model.CartaoConsumacaoDAO;
 import com.solutions.pompeu.model.Ingresso;
 import com.solutions.pompeu.model.IngressoDAO;
+import com.solutions.pompeu.model.Produto;
+import com.solutions.pompeu.model.ProdutoDAO;
 import com.solutions.pompeu.model.UsuarioDAO;
 import com.solutions.pompeu.model.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,9 +23,7 @@ import com.solutions.pompeu.model.Usuario;
 public class TextaConeccao {
 
     public static void main(String[] args) {
-        //cadCartao();
-        mostraSaldoCartao();
-        //updateCartao();
+     listProd();
     }
 
     public static void cadUser() {
@@ -60,5 +62,25 @@ public class TextaConeccao {
         CartaoConsumacao cartao = new CartaoConsumacao((float) cartaoDAO.cartaoSAldo(15)+300, 15);
         cartaoDAO.cartaoUpdate(cartao);
         System.out.println("Depois :" + cartaoDAO.cartaoSAldo(15));
+    }
+    
+    public static void cadProd(){
+        Produto p = new Produto("suco",10.00 );
+        ProdutoDAO pd = new ProdutoDAO();
+        pd.cadProduto(p);
+    }
+    
+    public static void exProd(){
+        Produto p = new Produto(9);
+        ProdutoDAO pd = new ProdutoDAO();
+        pd.excluirProdutos(p);
+    }
+    
+    public static void listProd(){
+        ProdutoDAO pd = new ProdutoDAO();
+        List<Produto> listaProduto = pd.buscarProdutos();        
+        for (Produto p : listaProduto) {
+            System.out.println(p.getId()+" "+p.getNome()+" "+p.getPreco());
+        }
     }
 }
