@@ -60,7 +60,7 @@ public class UsuarioDAO {
 
             if (resultado.next()) {
                 usuLogar = new Usuario();
-                usuLogar.setId(resultado.getInt("id"));
+                usuLogar.setUsuario_id(resultado.getInt("usuario_id"));
                 usuLogar.setNome(resultado.getString("nome"));
                 usuLogar.setLogin(resultado.getString("login"));
                 usuLogar.setSenha(resultado.getString("senha"));

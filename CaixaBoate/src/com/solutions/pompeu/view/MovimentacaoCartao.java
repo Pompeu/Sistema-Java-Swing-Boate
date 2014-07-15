@@ -414,7 +414,7 @@ public class MovimentacaoCartao extends MainClass {
             long numero;
             numero = Long.parseLong(tfNumeroCartao.getText());
             long id_usuario;
-            id_usuario = cartaoDao.listaCartao(numero).getId();
+            id_usuario = cartaoDao.listaCartao(numero).getUsuario_id();
             CartaoConsumacaoDAO cartaoDao2 = new CartaoConsumacaoDAO();
             cartaoDao2.vendas(-total, numero, id_usuario);
             tfNumeroCartaoActionPerformed(evt);

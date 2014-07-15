@@ -11,7 +11,7 @@ package com.solutions.pompeu.model;
  */
 public class Usuario {
 
-    private long id;
+    private long usuario_id;
     private String nome;
     private String login;
     private String senha;
@@ -36,12 +36,12 @@ public class Usuario {
         this.cpf = cpf;
     }
 
-    public long getId() {
-        return id;
+    public long getUsuario_id() {
+        return usuario_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUsuario_id(long usuario_id) {
+        this.usuario_id = usuario_id;
     }
 
     public String getNome() {
@@ -94,7 +94,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nome=" + nome
+        return "Usuario{" + "id=" + usuario_id + ", nome=" + nome
                 + ", login=" + login + ", senha=" + senha
                 + ", funcao=" + funcao + ", telefone=" + telefone
                 + ", cpf=" + cpf + '}';

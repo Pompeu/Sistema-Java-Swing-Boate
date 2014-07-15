@@ -78,7 +78,7 @@ public class TextaConeccao {
         ProdutoDAO pd = new ProdutoDAO();
         List<Produto> listaProduto = pd.buscarProdutos();
         for (Produto p : listaProduto) {
-            System.out.println(p.getId() + " " + p.getNome() + " " + p.getPreco());
+            System.out.println(p.getProduto_id()+ " " + p.getNome() + " " + p.getPreco());
         }
     }
 

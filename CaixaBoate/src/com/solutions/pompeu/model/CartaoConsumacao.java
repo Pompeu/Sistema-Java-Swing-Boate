@@ -19,12 +19,13 @@ package com.solutions.pompeu.model;
  *
  * @author Pompeu
  */
-public class CartaoConsumacao {    
-     private long id;
+public class CartaoConsumacao {
+
+    private long cartao_id;
     private double saldo;
     private long numero;
     private long usurario_id;
-    
+
     public CartaoConsumacao() {
     }
 
@@ -34,15 +35,14 @@ public class CartaoConsumacao {
         this.usurario_id = usurario_id;
     }
 
-    public long getId() {
-        return id;
+    public long getCartao_id() {
+        return cartao_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCartao_id(long cartao_id) {
+        this.cartao_id = cartao_id;
     }
 
-   
     
     public double getSaldo() {
         return saldo;
@@ -67,5 +67,5 @@ public class CartaoConsumacao {
     public void setUsurario_id(long usurario_id) {
         this.usurario_id = usurario_id;
     }
-    
+
 }

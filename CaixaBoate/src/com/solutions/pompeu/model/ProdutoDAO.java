@@ -56,9 +56,9 @@ public class ProdutoDAO extends UsuarioDAO {
     public void excluirProdutos(Produto produto) {
 
         try {
-            String sql = "DELETE FROM PRODUTO WHERE id = ?";
+            String sql = "DELETE FROM PRODUTO WHERE PRODUTO_ID = ?";
             preparar = con.prepareStatement(sql);
-            preparar.setLong(1, produto.getId());
+            preparar.setLong(1, produto.getProduto_id());
 
             int x = JOptionPane.showConfirmDialog(null, "Deseja Realmente Excluir um Produto");
             if (x == 0) {
@@ -81,7 +81,7 @@ public class ProdutoDAO extends UsuarioDAO {
     public Produto buscarProdutoId(long id) {
         Produto produto = new Produto();
 
-        String sql = "SELECT * FROM PRODUTO WHERE ID = ?";
+        String sql = "SELECT * FROM PRODUTO WHERE PRODUTO_ID = ?";
 
         try {
             preparar = con.prepareStatement(sql);
@@ -109,14 +109,14 @@ public class ProdutoDAO extends UsuarioDAO {
     public List<Produto> buscarProdutos() {
         List<Produto> listaProduto = new ArrayList<>();
 
-        String sql = "SELECT * FROM PRODUTO ORDER BY ID";
+        String sql = "SELECT * FROM PRODUTO ORDER BY PRODUTO_ID";
         try {
             preparar = con.prepareStatement(sql);
             ResultSet resultado = preparar.executeQuery();
 
             while (resultado.next()) {
                 Produto produto = new Produto();
-                produto.setId(resultado.getLong("id"));
+                produto.setProduto_id(resultado.getLong("PRODUTO_ID"));
                 produto.setNome(resultado.getString("nome"));
                 produto.setPreco(resultado.getDouble("preco"));
                 listaProduto.add(produto);

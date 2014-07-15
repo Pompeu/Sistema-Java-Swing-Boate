@@ -19,7 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import javax.swing.JOptionPane;
 
 /**
@@ -62,9 +61,9 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         Usuario usuario = new Usuario();
 
         Map<CartaoConsumacao, Usuario> cartaoUsuario = new HashMap<>();
-
-        String sql = "SELECT * FROM CARTAO\n"
-                + "JOIN USUARIO ON USUARIO_ID = USUARIO.ID WHERE NUMERO = ?";
+      
+        String sql ="SELECT * FROM USUARIO_CARTAO WHERE NUMERO = ?";
+        
         try {
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, numero);
@@ -73,7 +72,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
             while (resultado.next()) {
 
                 usuario.setNome(resultado.getString("nome"));
-                usuario.setId(resultado.getLong("id"));
+                usuario.setUsuario_id(resultado.getLong("usuario_id"));
                 cartaoUsuario.put(cartao, usuario);
             }
             preparar.close();
@@ -146,7 +145,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
             //pegando o resultado da consulta
             ResultSet resultado = preparar.executeQuery();
             while (resultado.next()) {
-                cartao.setId(resultado.getLong("id"));
+                cartao.setCartao_id(resultado.getLong("cartao_id"));
                 cartao.setNumero(resultado.getLong("numero"));
                 cartao.setSaldo(resultado.getFloat("saldo"));
             }

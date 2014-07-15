@@ -318,7 +318,7 @@ public class CadastroProdutos extends MainClass {
         List<Produto> lista = pdao.buscarProdutos();
 
         try {
-            tfId.setText(String.valueOf(lista.get(i).getId()));
+            tfId.setText(String.valueOf(lista.get(i).getProduto_id()));
             tfNome.setText(lista.get(i).getNome());
             tfValor.setText(String.valueOf(lista.get(i).getPreco()));
         } catch (IndexOutOfBoundsException ex) {

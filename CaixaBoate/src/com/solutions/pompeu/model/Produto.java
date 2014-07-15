@@ -21,15 +21,15 @@ package com.solutions.pompeu.model;
  */
 public class Produto {
 
-    private long id;
+    private long produto_id;
     private String nome;
     private double preco;
 
     public Produto() {
     }
 
-    public Produto(long id) {
-        this.id = id;
+    public Produto(long produto_id) {
+        this.produto_id = produto_id;
     }
 
     public Produto(String nome, double preco) {
@@ -37,13 +37,15 @@ public class Produto {
         this.preco = preco;
     }
 
-    public long getId() {
-        return id;
+    public long getProduto_id() {
+        return produto_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProduto_id(long produto_id) {
+        this.produto_id = produto_id;
     }
+
+
 
     public String getNome() {
         return nome;
