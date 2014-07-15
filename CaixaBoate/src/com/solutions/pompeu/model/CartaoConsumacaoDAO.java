@@ -19,6 +19,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -50,8 +52,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
     }
 
     /**
-     * Metodo que faz um select entre usuario e o cartão
-     * e retorna um usuario
+     * Metodo que faz um select entre usuario e o cartão e retorna um usuario
      *
      * @param numero de cartão
      * @return nome de usuario
@@ -61,9 +62,9 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         Usuario usuario = new Usuario();
 
         Map<CartaoConsumacao, Usuario> cartaoUsuario = new HashMap<>();
-      
-        String sql ="SELECT * FROM USUARIO_CARTAO WHERE NUMERO = ?";
-        
+
+        String sql = "SELECT * FROM USUARIO_CARTAO WHERE NUMERO = ?";
+
         try {
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, numero);
@@ -121,10 +122,21 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
      * @param usuario_id
      */
     public void vendas(double creditos, long numero, long usuario_id) {
-        System.out.println("Antes :" + cartaoSAldo(numero));
-        CartaoConsumacao cartao = new CartaoConsumacao(cartaoSAldo(numero) + creditos, numero, usuario_id);
-        cartaoUpdate(cartao);
-        System.out.println("Depois :" + cartaoSAldo(numero));
+        try {
+            con.setAutoCommit(false);
+            CartaoConsumacao cartao = new CartaoConsumacao(cartaoSAldo(numero) + creditos, numero, usuario_id);
+            cartaoUpdate(cartao);
+            if (cartaoSAldo(numero) > 0) {
+                con.commit();
+            }else{
+                con.rollback();
+            }
+        } catch (SQLException ex) {
+            {
+                Logger.getLogger(CartaoConsumacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
     /**
