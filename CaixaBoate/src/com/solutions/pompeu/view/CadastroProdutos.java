@@ -23,6 +23,7 @@ public class CadastroProdutos extends MainClass {
      * Creates new form CadProd
      */
     public CadastroProdutos() {
+        super();
         initComponents();
         this.setLocationRelativeTo(null);
     }

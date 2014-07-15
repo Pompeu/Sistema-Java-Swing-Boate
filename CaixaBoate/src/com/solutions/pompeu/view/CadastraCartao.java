@@ -164,6 +164,7 @@ public class CadastraCartao extends MainClass {
         // TODO add your handling code here:
         long numero = 0;
         float saldo = 0.00f;
+        long numero_usuario = 0;
         try {
             numero = Long.parseLong(tfNumeroCartao.getText());
             saldo = Float.parseFloat(tfSaldo.getText());
@@ -171,7 +172,7 @@ public class CadastraCartao extends MainClass {
             
         }
         if (saldo > 0 || numero > 0) {
-            CartaoConsumacao cartao = new CartaoConsumacao(saldo, numero);
+            CartaoConsumacao cartao = new CartaoConsumacao(saldo, numero,numero_usuario);
             CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
             cartaoDAO.cartaoStart(cartao);
         } else {

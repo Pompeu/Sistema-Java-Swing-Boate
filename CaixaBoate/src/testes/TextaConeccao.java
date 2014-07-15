@@ -7,13 +7,10 @@ package testes;
 
 import com.solutions.pompeu.model.CartaoConsumacao;
 import com.solutions.pompeu.model.CartaoConsumacaoDAO;
-import com.solutions.pompeu.model.Ingresso;
-import com.solutions.pompeu.model.IngressoDAO;
 import com.solutions.pompeu.model.Produto;
 import com.solutions.pompeu.model.ProdutoDAO;
 import com.solutions.pompeu.model.UsuarioDAO;
 import com.solutions.pompeu.model.Usuario;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +20,7 @@ import java.util.List;
 public class TextaConeccao {
 
     public static void main(String[] args) {
-     listProd();
+        vendas(800, 15, 1);
     }
 
     public static void cadUser() {
@@ -32,21 +29,9 @@ public class TextaConeccao {
         System.out.println(usu.logar(usuario));
     }
 
-    public static void cadIngresso() {
-        Ingresso ing = new Ingresso("Camarote Vip", 50, "Fanatasy Fest");
-        IngressoDAO ingDao = new IngressoDAO();
-        ingDao.cadIngressos(ing);
-    }
-
-    public static void ingressoUpdate() {
-        Ingresso ing = new Ingresso("Pista", 15, "Fantasy Fest");
-        IngressoDAO ingDao = new IngressoDAO();
-        ingDao.precoUpdate(ing);
-
-    }
 
     public static void cadCartao() {
-        CartaoConsumacao cartao = new CartaoConsumacao(35, 25);
+        CartaoConsumacao cartao = new CartaoConsumacao(35, 25, 6);
         CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
         cartaoDAO.cartaoStart(cartao);
     }
@@ -56,31 +41,51 @@ public class TextaConeccao {
         System.out.println(cartaoDAO.cartaoSAldo(15));
     }
 
-    public static void updateCartao() {
+    public static void updateCartao(double creditos, long num, long usuNum) {
         CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
-        System.out.println("Antes :" + cartaoDAO.cartaoSAldo(15));
-        CartaoConsumacao cartao = new CartaoConsumacao((float) cartaoDAO.cartaoSAldo(15)+300, 15);
+        System.out.println("Antes :" + cartaoDAO.cartaoSAldo(num));
+        CartaoConsumacao cartao = new CartaoConsumacao(cartaoDAO.cartaoSAldo(num) + creditos, num, usuNum);
         cartaoDAO.cartaoUpdate(cartao);
-        System.out.println("Depois :" + cartaoDAO.cartaoSAldo(15));
+        System.out.println("Depois :" + cartaoDAO.cartaoSAldo(num));
     }
-    
-    public static void cadProd(){
-        Produto p = new Produto("suco",10.00 );
+
+    public static void vendas(double saldo, long num, long usuNum) {
+        CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
+        cartaoDAO.vendas(saldo, num, usuNum);
+    }
+
+    public static void cadProd() {
+        Produto p = new Produto("suco", 10.00);
         ProdutoDAO pd = new ProdutoDAO();
         pd.cadProduto(p);
     }
-    
-    public static void exProd(){
+
+    public static void exProd() {
         Produto p = new Produto(9);
         ProdutoDAO pd = new ProdutoDAO();
         pd.excluirProdutos(p);
     }
-    
-    public static void listProd(){
+
+    public static void buscaProdID() {
+
         ProdutoDAO pd = new ProdutoDAO();
-        List<Produto> listaProduto = pd.buscarProdutos();        
+        System.out.println(pd.buscarProdutoId(14).getPreco());
+        ProdutoDAO pd2 = new ProdutoDAO();
+        System.out.println(pd2.buscarProdutoId(14).getNome());
+    }
+
+    public static void listProd() {
+        ProdutoDAO pd = new ProdutoDAO();
+        List<Produto> listaProduto = pd.buscarProdutos();
         for (Produto p : listaProduto) {
-            System.out.println(p.getId()+" "+p.getNome()+" "+p.getPreco());
+            System.out.println(p.getId() + " " + p.getNome() + " " + p.getPreco());
         }
     }
+
+    public static void listaCartaoUsu() {
+        CartaoConsumacaoDAO cDao = new CartaoConsumacaoDAO();
+        Usuario nome = cDao.listaCartao(15);
+        System.out.println(nome);
+    }
+
 }

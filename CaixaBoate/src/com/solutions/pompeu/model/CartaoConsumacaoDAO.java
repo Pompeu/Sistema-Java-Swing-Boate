@@ -15,9 +15,11 @@
  */
 package com.solutions.pompeu.model;
 
-import com.solutions.pompeu.model.CartaoConsumacao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import javax.swing.JOptionPane;
 
 /**
@@ -49,25 +51,81 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
     }
 
     /**
+     * Metodo que faz um select entre usuario e o cartão
+     * e retorna um usuario
+     *
+     * @param numero de cartão
+     * @return nome de usuario
+     */
+    public Usuario listaCartao(long numero) {
+        CartaoConsumacao cartao = new CartaoConsumacao();
+        Usuario usuario = new Usuario();
+
+        Map<CartaoConsumacao, Usuario> cartaoUsuario = new HashMap<>();
+
+        String sql = "SELECT * FROM CARTAO\n"
+                + "JOIN USUARIO ON USUARIO_ID = USUARIO.ID WHERE NUMERO = ?";
+        try {
+            preparar = con.prepareStatement(sql);
+            preparar.setLong(1, numero);
+            ResultSet resultado = preparar.executeQuery();
+
+            while (resultado.next()) {
+
+                usuario.setNome(resultado.getString("nome"));
+                usuario.setId(resultado.getLong("id"));
+                cartaoUsuario.put(cartao, usuario);
+            }
+            preparar.close();
+            con.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }/*
+         try {
+         nome = cartaoUsuario.values().iterator().next().getNome();
+         } catch (NoSuchElementException ex) {
+         JOptionPane.showMessageDialog(null, "Numero Não Econtrado");
+         }*/
+
+        return usuario;
+    }
+
+    /**
      * Adicionar mais saldo ao cartao ou baixar creditos no caso de vendas
      *
-     * @param cartao    
+     * @param cartao
      */
     public void cartaoUpdate(CartaoConsumacao cartao) {
-        
-            
+
         String sql = "UPDATE CARTAO SET SALDO = ? WHERE NUMERO = ?";
-        
+
         try {
             preparar = con.prepareStatement(sql);
             preparar.setDouble(1, cartao.getSaldo());
             preparar.setLong(2, cartao.getNumero());
             preparar.execute();
-            preparar.close();            
+            preparar.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-        
+
+    }
+
+    /**
+     * Metodo que faz Movimentação de vendas com cartão consumacação pode ser
+     * usado pra adicionar mais creditos ou baixar credidos, apenas mudando o
+     * paremetro creditos (+/-)pra positivo ou negativo
+     *
+     * @param creditos
+     * @param numero
+     * @param usuario_id
+     */
+    public void vendas(double creditos, long numero, long usuario_id) {
+        System.out.println("Antes :" + cartaoSAldo(numero));
+        CartaoConsumacao cartao = new CartaoConsumacao(cartaoSAldo(numero) + creditos, numero, usuario_id);
+        cartaoUpdate(cartao);
+        System.out.println("Depois :" + cartaoSAldo(numero));
     }
 
     /**
@@ -98,4 +156,8 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         }
         return cartao.getSaldo();
     }
+
+    /**
+     *
+     */
 }

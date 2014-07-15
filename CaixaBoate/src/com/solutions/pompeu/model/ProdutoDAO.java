@@ -48,6 +48,11 @@ public class ProdutoDAO extends UsuarioDAO {
         }
     }
 
+    /**
+     * metodo que faz exclusão de produtos no sistema
+     *
+     * @param produto
+     */
     public void excluirProdutos(Produto produto) {
 
         try {
@@ -67,6 +72,40 @@ public class ProdutoDAO extends UsuarioDAO {
         }
     }
 
+    /**
+     * esse metodo retorma num nome de um produto ele faz um busca usando o id
+     *
+     * @param id
+     * @return nome
+     */
+    public Produto buscarProdutoId(long id) {
+        Produto produto = new Produto();
+
+        String sql = "SELECT * FROM PRODUTO WHERE ID = ?";
+
+        try {
+            preparar = con.prepareStatement(sql);
+            preparar.setLong(1, id);
+            ResultSet resultado = preparar.executeQuery();
+            while (resultado.next()) {
+                produto.setNome(resultado.getString("nome"));
+                produto.setPreco(resultado.getDouble("preco"));
+            }
+            preparar.close();
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
+        return produto;
+
+    }
+
+    /**
+     * Metodo que faz busca de todos produtos do sistema ordenados por id
+     *
+     * @return
+     */
     public List<Produto> buscarProdutos() {
         List<Produto> listaProduto = new ArrayList<>();
 
@@ -89,5 +128,5 @@ public class ProdutoDAO extends UsuarioDAO {
         }
         return listaProduto;
     }
-    
+
 }

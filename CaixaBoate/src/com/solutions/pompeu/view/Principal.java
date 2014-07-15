@@ -31,10 +31,9 @@ public class Principal extends MainClass {
 
         jPanel1 = new javax.swing.JPanel();
         jbCadastraUsuarios = new javax.swing.JButton();
-        jbCadastraIngressos = new javax.swing.JButton();
-        jbCadastrarCartao = new javax.swing.JButton();
+        btnVendasCartao = new javax.swing.JButton();
         jbCadBebidas = new javax.swing.JButton();
-        bntSair = new javax.swing.JButton();
+        bntCadastraCartao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -47,27 +46,27 @@ public class Principal extends MainClass {
             }
         });
 
-        jbCadastraIngressos.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jbCadastraIngressos.setText("Cadastrar Ingressos");
-        jbCadastraIngressos.addActionListener(new java.awt.event.ActionListener() {
+        btnVendasCartao.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        btnVendasCartao.setText("Vendas Cartão");
+        btnVendasCartao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCadastraIngressosActionPerformed(evt);
-            }
-        });
-
-        jbCadastrarCartao.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jbCadastrarCartao.setText("Cadastrar Cartão");
-        jbCadastrarCartao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCadastrarCartaoActionPerformed(evt);
+                btnVendasCartaoActionPerformed(evt);
             }
         });
 
         jbCadBebidas.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jbCadBebidas.setText("Cadastrar Bebidas");
+        jbCadBebidas.setText("Cadastrar Produtos");
         jbCadBebidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCadBebidasActionPerformed(evt);
+            }
+        });
+
+        bntCadastraCartao.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        bntCadastraCartao.setText("Cadastrar Cartão");
+        bntCadastraCartao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntCadastraCartaoActionPerformed(evt);
             }
         });
 
@@ -75,97 +74,83 @@ public class Principal extends MainClass {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jbCadastrarCartao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbCadastraUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbCadastraIngressos)
-                    .addComponent(jbCadBebidas))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jbCadastraUsuarios)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbCadBebidas)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(bntCadastraCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVendasCartao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbCadBebidas, jbCadastraIngressos, jbCadastraUsuarios, jbCadastrarCartao});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bntCadastraCartao, btnVendasCartao, jbCadBebidas, jbCadastraUsuarios});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbCadastraIngressos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbCadastraUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbCadastraUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbCadBebidas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbCadastrarCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbCadBebidas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
+                    .addComponent(bntCadastraCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVendasCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jbCadBebidas, jbCadastraIngressos, jbCadastraUsuarios, jbCadastrarCartao});
-
-        bntSair.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        bntSair.setText("Sair");
-        bntSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntSairActionPerformed(evt);
-            }
-        });
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnVendasCartao, jbCadBebidas, jbCadastraUsuarios});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(bntSair, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
-            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
-                .addComponent(bntSair, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                .addGap(27, 27, 27))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void jbCadastraUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastraUsuariosActionPerformed
         // TODO add your handling code here:
         this.setEnabled(false);
         new CadastroUsuario(this).setVisible(true);
     }//GEN-LAST:event_jbCadastraUsuariosActionPerformed
 
-    private void bntSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSairActionPerformed
-        this.dispose();
-        new Login().setVisible(true);
-    }//GEN-LAST:event_bntSairActionPerformed
-
-    private void jbCadastraIngressosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastraIngressosActionPerformed
+    private void btnVendasCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasCartaoActionPerformed
         // TODO add your handling code here:
         this.setEnabled(false);
-        new CadastroIngresso(this).setVisible(true);
-    }//GEN-LAST:event_jbCadastraIngressosActionPerformed
-
-    private void jbCadastrarCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarCartaoActionPerformed
-        // TODO add your handling code here:
-        this.setEnabled(false);
-        new CadastraCartao(this).setVisible(true);
-    }//GEN-LAST:event_jbCadastrarCartaoActionPerformed
+        new MovimentacaoCartao(this).setVisible(true);
+    }//GEN-LAST:event_btnVendasCartaoActionPerformed
 
     private void jbCadBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadBebidasActionPerformed
         // TODO add your handling code here:
         this.setEnabled(false);
         new CadastroProdutos(this).setVisible(true);
     }//GEN-LAST:event_jbCadBebidasActionPerformed
+
+    private void bntCadastraCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastraCartaoActionPerformed
+        // TODO add your handling code here:
+        this.setEnabled(false);
+        new CadastraCartao(this).setVisible(true);
+    }//GEN-LAST:event_bntCadastraCartaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,11 +188,10 @@ public class Principal extends MainClass {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntSair;
+    private javax.swing.JButton bntCadastraCartao;
+    private javax.swing.JButton btnVendasCartao;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbCadBebidas;
-    private javax.swing.JButton jbCadastraIngressos;
     private javax.swing.JButton jbCadastraUsuarios;
-    private javax.swing.JButton jbCadastrarCartao;
     // End of variables declaration//GEN-END:variables
 }

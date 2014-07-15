@@ -19,25 +19,37 @@ package com.solutions.pompeu.model;
  *
  * @author Pompeu
  */
-public class CartaoConsumacao extends Ingresso {
-
-    private float saldo;
+public class CartaoConsumacao {    
+     private long id;
+    private double saldo;
     private long numero;
-
+    private long usurario_id;
+    
     public CartaoConsumacao() {
     }
 
-    public CartaoConsumacao(float saldo, long numero) {
+    public CartaoConsumacao(double saldo, long numero, long usurario_id) {
         this.saldo = saldo;
         this.numero = numero;
+        this.usurario_id = usurario_id;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+   
+    
     public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(float saldo) {
-        this.saldo =  saldo;
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
 
     public long getNumero() {
@@ -48,4 +60,12 @@ public class CartaoConsumacao extends Ingresso {
         this.numero = numero;
     }
 
+    public long getUsurario_id() {
+        return usurario_id;
+    }
+
+    public void setUsurario_id(long usurario_id) {
+        this.usurario_id = usurario_id;
+    }
+    
 }
