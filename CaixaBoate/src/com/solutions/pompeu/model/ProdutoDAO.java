@@ -35,7 +35,7 @@ public class ProdutoDAO extends UsuarioDAO {
     public void cadProduto(Produto produto) {
 
         try {
-            String sql = "INSERT INTO PRODUTO(NOME,PRECO) VALUES (?,?)";
+            String sql = "INSERT INTO PRODUTOS(NOME_PRODUTO,PRECO_PRODUTO) VALUES (?,?)";
             preparar = con.prepareStatement(sql);
             preparar.setString(1, produto.getNome());
             preparar.setDouble(2, produto.getPreco());
@@ -56,7 +56,7 @@ public class ProdutoDAO extends UsuarioDAO {
     public void excluirProdutos(Produto produto) {
 
         try {
-            String sql = "DELETE FROM PRODUTO WHERE PRODUTO_ID = ?";
+            String sql = "DELETE FROM PRODUTOS WHERE PRODUTO_ID = ?";
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, produto.getProduto_id());
 
@@ -81,15 +81,15 @@ public class ProdutoDAO extends UsuarioDAO {
     public Produto buscarProdutoId(long id) {
         Produto produto = new Produto();
 
-        String sql = "SELECT * FROM PRODUTO WHERE PRODUTO_ID = ?";
+        String sql = "SELECT * FROM PRODUTOS WHERE PRODUTO_ID = ?";
 
         try {
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, id);
             ResultSet resultado = preparar.executeQuery();
             while (resultado.next()) {
-                produto.setNome(resultado.getString("nome"));
-                produto.setPreco(resultado.getDouble("preco"));
+                produto.setNome(resultado.getString("nome_produto"));
+                produto.setPreco(resultado.getDouble("preco_produto"));
             }
             preparar.close();
             con.close();
@@ -109,7 +109,7 @@ public class ProdutoDAO extends UsuarioDAO {
     public List<Produto> buscarProdutos() {
         List<Produto> listaProduto = new ArrayList<>();
 
-        String sql = "SELECT * FROM PRODUTO ORDER BY PRODUTO_ID";
+        String sql = "SELECT * FROM PRODUTOS ORDER BY PRODUTO_ID";
         try {
             preparar = con.prepareStatement(sql);
             ResultSet resultado = preparar.executeQuery();
@@ -117,8 +117,8 @@ public class ProdutoDAO extends UsuarioDAO {
             while (resultado.next()) {
                 Produto produto = new Produto();
                 produto.setProduto_id(resultado.getLong("PRODUTO_ID"));
-                produto.setNome(resultado.getString("nome"));
-                produto.setPreco(resultado.getDouble("preco"));
+                produto.setNome(resultado.getString("nome_produto"));
+                produto.setPreco(resultado.getDouble("preco_produto"));
                 listaProduto.add(produto);
             }
             preparar.close();

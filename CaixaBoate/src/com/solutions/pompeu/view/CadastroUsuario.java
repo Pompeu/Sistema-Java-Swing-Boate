@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  *
  * @author Pompeu
  */
-public class CadastroUsuario extends MainClass {
+public class CadastroUsuario extends MainClassAbstract {
 
     /**
      * Creates new form CadastroUsuario

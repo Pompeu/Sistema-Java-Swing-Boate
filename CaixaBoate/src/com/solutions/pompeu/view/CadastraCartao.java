@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *
  * @author Pompeu
  */
-public class CadastraCartao extends MainClass {
+public class CadastraCartao extends MainClassAbstract {
 
     /**
      * Creates new form CadastraCartao

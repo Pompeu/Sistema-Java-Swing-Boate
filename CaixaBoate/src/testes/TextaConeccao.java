@@ -20,7 +20,19 @@ import java.util.List;
 public class TextaConeccao {
 
     public static void main(String[] args) {
-        vendas(800, 15, 1);
+        prod_ven_atu();
+    }
+    public static void prod_ven_atu(){
+        CartaoConsumacaoDAO cdao = new CartaoConsumacaoDAO();
+        //System.out.println(cdao.pegarIdProdutoAtual(1,2));
+        cdao.produto_movimento_deletar(1, 2);
+    }
+    public static void insirNumeroVenda() {
+        CartaoConsumacaoDAO cdao = new CartaoConsumacaoDAO();
+
+        Long a = cdao.inserirIdVenda();
+        System.out.println(a);
+
     }
 
     public static void cadUser() {
@@ -28,7 +40,6 @@ public class TextaConeccao {
         UsuarioDAO usu = new UsuarioDAO();
         System.out.println(usu.logar(usuario));
     }
-
 
     public static void cadCartao() {
         CartaoConsumacao cartao = new CartaoConsumacao(35, 25, 6);
@@ -78,7 +89,7 @@ public class TextaConeccao {
         ProdutoDAO pd = new ProdutoDAO();
         List<Produto> listaProduto = pd.buscarProdutos();
         for (Produto p : listaProduto) {
-            System.out.println(p.getProduto_id()+ " " + p.getNome() + " " + p.getPreco());
+            System.out.println(p.getProduto_id() + " " + p.getNome() + " " + p.getPreco());
         }
     }
 
@@ -88,4 +99,12 @@ public class TextaConeccao {
         System.out.println(nome);
     }
 
+    public static Long pegarNovoIdVenda() {
+
+        CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
+
+        System.out.println(cartaoDAO.pegarNovoIdVenda());
+        return cartaoDAO.pegarNovoIdVenda();
+
+    }
 }

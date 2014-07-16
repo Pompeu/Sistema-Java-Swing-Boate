@@ -1,7 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2014 Pompeu.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.solutions.pompeu.model;
 
@@ -27,7 +37,8 @@ public class UsuarioDAO {
     public void cadUsuario(Usuario usu) {
 
         try {
-            String sql = "INSERT INTO USUARIO(nome,login,senha,funcao,telefone,cpf) VALUES (?,?,md5(?),?,?,?)";
+            String sql = "INSERT INTO USUARIOS(nome_usuario,login_usuario,senha_usuario,funcao_usuario,telefone_usuario,cpf_usuario"
+                    + ") VALUES (?,?,md5(?),?,?,?)";
 
             preparar = con.prepareStatement(sql);
             preparar.setString(1, usu.getNome());
@@ -51,7 +62,7 @@ public class UsuarioDAO {
     public Usuario logar(Usuario usu) {
         Usuario usuLogar = null;
         try {
-            String sql = "SELECT * FROM USUARIO WHERE LOGIN = ? AND SENHA = md5(?)";
+            String sql = "SELECT * FROM USUARIOS WHERE LOGIN_usuario = ? AND SENHA_usuario = md5(?)";
 
             preparar = con.prepareStatement(sql);
             preparar.setString(1, usu.getLogin());
@@ -61,18 +72,17 @@ public class UsuarioDAO {
             if (resultado.next()) {
                 usuLogar = new Usuario();
                 usuLogar.setUsuario_id(resultado.getInt("usuario_id"));
-                usuLogar.setNome(resultado.getString("nome"));
-                usuLogar.setLogin(resultado.getString("login"));
-                usuLogar.setSenha(resultado.getString("senha"));
-                usuLogar.setFuncao(resultado.getString("funcao"));
-                usuLogar.setTelefone(resultado.getString("telefone"));
-                usuLogar.setCpf(resultado.getString("cpf"));
+                usuLogar.setNome(resultado.getString("nome_usuario"));
+                usuLogar.setLogin(resultado.getString("login_usuario"));
+                usuLogar.setSenha(resultado.getString("senha_usuario"));
+                usuLogar.setFuncao(resultado.getString("funcao_usuario"));
+                usuLogar.setTelefone(resultado.getString("telefone_usuario"));
+                usuLogar.setCpf(resultado.getString("cpf_usuario"));
                 JOptionPane.showMessageDialog(null,"Bem Vindo \n"+usuLogar.getNome()+"\n"+usuLogar.getFuncao());
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-
         return usuLogar;
     }
 }

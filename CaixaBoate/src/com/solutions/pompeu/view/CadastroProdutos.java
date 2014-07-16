@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author Pompeu
  */
-public class CadastroProdutos extends MainClass {
+public class CadastroProdutos extends MainClassAbstract {
 
     protected int i = 0;
 

@@ -9,7 +9,7 @@ package com.solutions.pompeu.view;
  *
  * @author Pompeu
  */
-public class Principal extends MainClass {
+public class Principal extends MainClassAbstract {
 
     /**
      * Creates new form Principal
@@ -137,7 +137,7 @@ public class Principal extends MainClass {
     private void btnVendasCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasCartaoActionPerformed
         // TODO add your handling code here:
         this.setEnabled(false);
-        new MovimentacaoCartao(this).setVisible(true);
+        new VendasCartaoConsumacao(this).setVisible(true);
     }//GEN-LAST:event_btnVendasCartaoActionPerformed
 
     private void jbCadBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadBebidasActionPerformed
