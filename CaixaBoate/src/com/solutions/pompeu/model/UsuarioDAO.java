@@ -31,7 +31,7 @@ public class UsuarioDAO {
     protected Connection con = Conectar.conect();
     protected PreparedStatement preparar;
     /**
-     * esse função faz cadstro de usuarios no banco de dados
+     * essa função faz cadstro de usuarios no banco de dados
      * @param usu 
      */
     public void cadUsuario(Usuario usu) {
@@ -57,7 +57,7 @@ public class UsuarioDAO {
     /**
      * essa função faz o login com banco de dados
      * @param usu
-     * @return 
+     * @return retorna um usuario logado
      */
     public Usuario logar(Usuario usu) {
         Usuario usuLogar = null;

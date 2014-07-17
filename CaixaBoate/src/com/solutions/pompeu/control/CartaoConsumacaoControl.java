@@ -15,6 +15,7 @@
  */
 package com.solutions.pompeu.control;
 
+import com.solutions.pompeu.model.CartaoConsumacao;
 import com.solutions.pompeu.model.CartaoConsumacaoDAO;
 
 /**
@@ -41,11 +42,10 @@ public class CartaoConsumacaoControl {
      * @param prod_id
      * @param venda_id
      * @param quant
-     * @param total
      */
-    public void produtoMovimentacaoinserir(long prod_id, long venda_id, int quant, double total) {
+    public void produtoMovimentacaoinserir(long prod_id, long venda_id, int quant) {
         CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
-        cartaoDAO.produto_movimento_inserir(prod_id, venda_id, quant, total);
+        cartaoDAO.produto_movimento_inserir(prod_id, venda_id, quant);
     }
 
     /**
@@ -54,13 +54,12 @@ public class CartaoConsumacaoControl {
      * @param prod_id
      * @param venda_id
      * @param quant
-     * @param total
      */
-    public void produtoMovimentacaoAtulizar(long prod_id,long venda_id, int quant, double total) {
+    public void produtoMovimentacaoAtulizar(long prod_id, long venda_id, int quant) {
         CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
-        cartaoDAO.produto_movimento_atulizar(prod_id,venda_id, quant, total);
+        cartaoDAO.produto_movimento_atulizar(prod_id, venda_id, quant);
     }
-    
+
     /**
      * Esse metodo deleta produtos da tabela de produto_movimentações
      *
@@ -70,5 +69,49 @@ public class CartaoConsumacaoControl {
     public void produtoMovimentacaoDelatar(long venda_id, long prod_id) {
         CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
         cartaoDAO.produto_movimento_deletar(venda_id, prod_id);
+    }
+
+    /**
+     * esse metodo retorna o id do usuario pegando o numero do cartão como
+     * parametro
+     *
+     * @param numero_cartao
+     * @return usuario_id;
+     */
+    public long pegarIdUsuarioProCartao(long numero_cartao) {
+        CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
+        return cartaoDAO.listaCartao(numero_cartao).getUsuario_id();
+    }
+
+    /**
+     * Esse metodo finaliza uma venda , atuliza o saldo do cartão
+     *
+     * @param venda_id
+     * @param total_venda
+     * @param cartao_id
+     *
+     */
+    public void finalizarVendaCartao(long venda_id, double total_venda, long cartao_id) {
+        CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
+        /*aulizando saldo do carão usando sue id*/
+        atulizarSaldoCartaoPosvenda(-total_venda, cartao_id);
+        cartaoDAO.finalizarVendaCartao(venda_id,total_venda, cartao_id);
+
+    }
+
+    public void atulizarSaldoCartaoPosvenda(double total_venda, long cartao_id) {
+        CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
+        CartaoConsumacao cartao = new CartaoConsumacao(cartaoDAO.cartaoSAldo(cartao_id) + total_venda, cartao_id);
+        cartaoDAO.cartaoUpdate(cartao);
+   }
+
+    /**
+     * esse metodos cansela uma venda e deleta todos seus registros no banco
+     *
+     * @param total
+     */
+    public void cancelarVendaCartao(double total) {
+        CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
+        cartaoDAO.cancelarVendaCartao(total);
     }
 }

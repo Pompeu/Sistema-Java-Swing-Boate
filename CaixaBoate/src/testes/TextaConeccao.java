@@ -5,12 +5,13 @@
  */
 package testes;
 
+import com.solutions.pompeu.control.CartaoConsumacaoControl;
 import com.solutions.pompeu.model.CartaoConsumacao;
 import com.solutions.pompeu.model.CartaoConsumacaoDAO;
 import com.solutions.pompeu.model.Produto;
 import com.solutions.pompeu.model.ProdutoDAO;
-import com.solutions.pompeu.model.UsuarioDAO;
 import com.solutions.pompeu.model.Usuario;
+import com.solutions.pompeu.model.UsuarioDAO;
 import java.util.List;
 
 /**
@@ -23,11 +24,11 @@ public class TextaConeccao {
         prod_ven_atu();
     }
     public static void prod_ven_atu(){
-        CartaoConsumacaoDAO cdao = new CartaoConsumacaoDAO();
-        //System.out.println(cdao.pegarIdProdutoAtual(1,2));
-        cdao.produto_movimento_deletar(1, 2);
+        //CartaoConsumacaoDAO cdao = new CartaoConsumacaoDAO();
+        CartaoConsumacaoControl cdao = new CartaoConsumacaoControl();
+        cdao.finalizarVendaCartao(1,80, 1);
     }
-    public static void insirNumeroVenda() {
+    public static void cadvendas() {
         CartaoConsumacaoDAO cdao = new CartaoConsumacaoDAO();
 
         Long a = cdao.inserirIdVenda();
@@ -52,18 +53,15 @@ public class TextaConeccao {
         System.out.println(cartaoDAO.cartaoSAldo(15));
     }
 
-    public static void updateCartao(double creditos, long num, long usuNum) {
+    public static void updateCartao(double creditos, long num) {
         CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
         System.out.println("Antes :" + cartaoDAO.cartaoSAldo(num));
-        CartaoConsumacao cartao = new CartaoConsumacao(cartaoDAO.cartaoSAldo(num) + creditos, num, usuNum);
+        CartaoConsumacao cartao = new CartaoConsumacao(cartaoDAO.cartaoSAldo(num) + creditos, num);
         cartaoDAO.cartaoUpdate(cartao);
         System.out.println("Depois :" + cartaoDAO.cartaoSAldo(num));
     }
 
-    public static void vendas(double saldo, long num, long usuNum) {
-        CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
-        cartaoDAO.vendas(saldo, num, usuNum);
-    }
+ 
 
     public static void cadProd() {
         Produto p = new Produto("suco", 10.00);

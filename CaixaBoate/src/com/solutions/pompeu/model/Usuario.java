@@ -33,13 +33,13 @@ public class Usuario {
     }
 
     public Usuario(String login, String senha) {
-        this.login = login;
+        this.login = login.toUpperCase();
         this.senha = senha;
     }
 
     public Usuario(String nome, String login, String senha, String funcao, String telefone, String cpf) {
         this.nome = nome;
-        this.login = login;
+        this.login = login.toUpperCase();
         this.senha = senha;
         this.funcao = funcao;
         this.telefone = telefone;
@@ -67,7 +67,7 @@ public class Usuario {
     }
 
     public void setLogin(String login) {
-        this.login = login;
+        this.login = login.toUpperCase();
     }
 
     public String getSenha() {

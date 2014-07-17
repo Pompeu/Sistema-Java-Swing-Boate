@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -30,29 +31,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Pompeu
  */
-public class VendasCartaoConsumacao extends MainClassAbstract {
+public class VendasCartaoConsumacao extends JFrame {
 
-    /**
-     * Creates new form MovimentacaoCartao
-     */
-    protected double valorun,
-
-    /**
-     * Creates new form VendasCartaoConsumacao
-     */
-    valortotal, 
-
-    /**
-     * Creates new form VendasCartaoConsumacao
-     */
-    total, 
-
-    /**
-     * Creates new form VendasCartaoConsumacao
-     */
-    saldo;
+    protected double valorun;
+    protected double valortotal;
+    protected double total;
+    protected double saldo;
     protected int quant, fechar = 0;
     protected long venda_id;
+    protected Principal principal;
 
     //formantando os valores de saida
     protected NumberFormat nf = new DecimalFormat("R$ #,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
@@ -67,7 +54,7 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
 
     public VendasCartaoConsumacao(Principal principal) {
         this();
-        this.princiapal = principal;
+        this.principal = principal;
     }
 
     /**
@@ -86,10 +73,10 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         tfProduto = new javax.swing.JTextField();
-        bntInserir = new javax.swing.JButton();
+        btnInserir = new javax.swing.JButton();
         jlNomePropretario = new javax.swing.JLabel();
         jlNomeProduto = new javax.swing.JLabel();
-        bntAtulizar = new javax.swing.JButton();
+        btnAtulizar = new javax.swing.JButton();
         btnDelatar = new javax.swing.JButton();
         tfQunatidade = new javax.swing.JTextField();
         jlSaldo = new javax.swing.JLabel();
@@ -110,8 +97,8 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
         btnFecharVenda = new javax.swing.JButton();
         btnCancelarVenda = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("VENDA POR CARTÃO CONSUMAÇÃO");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Vendas");
         setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
 
         jPanel1.setForeground(java.awt.Color.red);
@@ -136,10 +123,10 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
             }
         });
 
-        bntInserir.setText("Inserir");
-        bntInserir.addActionListener(new java.awt.event.ActionListener() {
+        btnInserir.setText("Inserir");
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntInserirActionPerformed(evt);
+                btnInserirActionPerformed(evt);
             }
         });
 
@@ -148,10 +135,10 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
 
         jlNomeProduto.setForeground(java.awt.Color.red);
 
-        bntAtulizar.setText("Atualizar");
-        bntAtulizar.addActionListener(new java.awt.event.ActionListener() {
+        btnAtulizar.setText("Atualizar");
+        btnAtulizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntAtulizarActionPerformed(evt);
+                btnAtulizarActionPerformed(evt);
             }
         });
 
@@ -159,12 +146,6 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
         btnDelatar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDelatarActionPerformed(evt);
-            }
-        });
-
-        tfQunatidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfQunatidadeActionPerformed(evt);
             }
         });
 
@@ -387,9 +368,9 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
                         .addGap(5, 5, 5)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bntInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bntAtulizar)
+                                .addComponent(btnAtulizar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnDelatar)
                                 .addGap(18, 18, 18)
@@ -413,7 +394,7 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bntAtulizar, bntInserir, btnDelatar});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAtulizar, btnDelatar, btnInserir});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {tfProduto, tfQunatidade});
 
@@ -445,8 +426,8 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
                                 .addComponent(jLabel4)
                                 .addComponent(tfQunatidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(bntInserir)
-                                .addComponent(bntAtulizar)
+                                .addComponent(btnInserir)
+                                .addComponent(btnAtulizar)
                                 .addComponent(btnDelatar))))
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -460,7 +441,7 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {tfNumeroCartao, tfProduto, tfQunatidade});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bntAtulizar, bntInserir, btnDelatar});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAtulizar, btnDelatar, btnInserir});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanel3, jPanel9});
 
@@ -525,7 +506,7 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
 
     }//GEN-LAST:event_tfProdutoActionPerformed
 
-    private void bntInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntInserirActionPerformed
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         jlMensagem.setText(null);
         tfNumeroCartao.setEditable(false);
 
@@ -549,18 +530,16 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
 
             int quantVenda = quant;
 
-            double totalPreco = valortotal;
-
-            cartaoControl.produtoMovimentacaoinserir(prod_id, venda_id, quantVenda, totalPreco);
+            cartaoControl.produtoMovimentacaoinserir(prod_id, venda_id, quantVenda);
 
         } else {
             JOptionPane.showMessageDialog(this, "Algum(s) campo(s) invalido(s)");
         }
         calctotal();
 
-    }//GEN-LAST:event_bntInserirActionPerformed
+    }//GEN-LAST:event_btnInserirActionPerformed
 
-    private void bntAtulizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAtulizarActionPerformed
+    private void btnAtulizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtulizarActionPerformed
         // TODO add your handling code here:
         jlMensagem.setText("");
 
@@ -588,10 +567,10 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
             CartaoConsumacaoControl cartaoControl = new CartaoConsumacaoControl();
             long produto_id = Long.parseLong(tfProduto.getText());
             int prod_quant = Integer.parseInt(tfQunatidade.getText());
-            cartaoControl.produtoMovimentacaoAtulizar(produto_id, venda_id, prod_quant, valortotal);
+            cartaoControl.produtoMovimentacaoAtulizar(produto_id, venda_id, prod_quant);
         }
         calctotal();
-    }//GEN-LAST:event_bntAtulizarActionPerformed
+    }//GEN-LAST:event_btnAtulizarActionPerformed
 
     private void btnDelatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelatarActionPerformed
         // TODO add your handling code here:
@@ -641,31 +620,26 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
             JOptionPane.showMessageDialog(this, "Operação Saldo Insuficiene");
             fechar++;
             if (fechar == 3) {
+                /*chamdno o evento do botão cancelar venda*/
+                btnDelatarActionPerformed(evt);
                 this.dispose();
-                JOptionPane.showMessageDialog(this, "Tente outra vez ....");
-                princiapal.setEnabled(true);
-                princiapal.toFront();
+                principal.setEnabled(true);
+                principal.toFront();
             }
         } else {
-            CartaoConsumacaoDAO cartaoDao = new CartaoConsumacaoDAO();
+
             long numero = 0;
+
             try {
                 numero = Long.parseLong(tfNumeroCartao.getText());
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Numero de Cartão invalido");
             }
-            long id_usuario;
-            int x = JOptionPane.showConfirmDialog(this, "Deseja Finalizar a compra ?");
-            if (x == 0) {
-                id_usuario = cartaoDao.listaCartao(numero).getUsuario_id();
-                CartaoConsumacaoDAO cartaoDao2 = new CartaoConsumacaoDAO();
-                cartaoDao2.vendas(-total, numero, id_usuario);
-                tfNumeroCartaoActionPerformed(evt);//atuliza saldo na tela
-                this.dispose();
-                princiapal.setEnabled(true);
-                princiapal.toFront();
-            }
-
+            CartaoConsumacaoControl cartaoControl = new CartaoConsumacaoControl();
+            long id_usuario = cartaoControl.pegarIdUsuarioProCartao(numero);
+            cartaoControl.finalizarVendaCartao(venda_id, total, id_usuario);
+            this.dispose();
+            principal.setEnabled(true);
         }
     }//GEN-LAST:event_btnFecharVendaActionPerformed
 
@@ -673,18 +647,17 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
         // TODO add your handling code here:
         int x = JOptionPane.showConfirmDialog(this, "Deseja Sair do Sistema ?");
         if (x == 0) {
+            /*esse variave indica que a venda foi canselada*/
+            int total_cancelar = 0;
+            CartaoConsumacaoControl cartaoControl = new CartaoConsumacaoControl();
+            cartaoControl.cancelarVendaCartao(total_cancelar);
             this.dispose();
-            princiapal.setEnabled(true);
-            princiapal.toFront();
+            principal.setEnabled(true);
+            principal.toFront();
         } else {
             this.toFront();
         }
     }//GEN-LAST:event_btnCancelarVendaActionPerformed
-
-    private void tfQunatidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQunatidadeActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_tfQunatidadeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -727,11 +700,11 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntAtulizar;
-    private javax.swing.JButton bntInserir;
+    private javax.swing.JButton btnAtulizar;
     private javax.swing.JButton btnCancelarVenda;
     private javax.swing.JButton btnDelatar;
     private javax.swing.JButton btnFecharVenda;
+    private javax.swing.JButton btnInserir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -799,9 +772,10 @@ public class VendasCartaoConsumacao extends MainClassAbstract {
         tfNumeroCartao.setEditable(habilita);
         tfProduto.setEditable(!habilita);
         tfQunatidade.setEditable(!habilita);
-        bntInserir.setEnabled(!habilita);
-        bntAtulizar.setEnabled(!habilita);
+        btnInserir.setEnabled(!habilita);
+        btnAtulizar.setEnabled(!habilita);
         btnDelatar.setEnabled(!habilita);
         btnFecharVenda.setEnabled(!habilita);
     }
+
 }

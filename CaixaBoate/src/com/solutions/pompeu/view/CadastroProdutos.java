@@ -30,7 +30,7 @@ public class CadastroProdutos extends MainClassAbstract {
 
     public CadastroProdutos(Principal principal) {
         this();
-        this.princiapal = principal;
+        this.principal = principal;
     }
 
     /**

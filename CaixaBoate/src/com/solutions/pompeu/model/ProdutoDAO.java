@@ -104,7 +104,7 @@ public class ProdutoDAO extends UsuarioDAO {
     /**
      * Metodo que faz busca de todos produtos do sistema ordenados por id
      *
-     * @return
+     * @return Lista de protudos
      */
     public List<Produto> buscarProdutos() {
         List<Produto> listaProduto = new ArrayList<>();

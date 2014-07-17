@@ -19,6 +19,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,9 +36,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
      */
     public Long pegarNovoIdVenda() {
         long vendaID = 0;
-
         String sql = "SELECT MAX(VENDA_ID) FROM VENDAS_CARTAO_CONS";
-
         try {
             preparar = con.prepareStatement(sql);
             ResultSet resultado = preparar.executeQuery();
@@ -54,13 +54,15 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
     /**
      * esse metodo faz a inserção apenas do novo ID de venda
      *
-     * @return
+     * @return retorna no novo id de venda
      */
     public long inserirIdVenda() {
         long venda_id = pegarNovoIdVenda();
-        String sql = "INSERT INTO VENDAS_CARTAO_CONS(VENDA_ID)"
-                + "VALUES (?)";
+
+        String sql = "INSERT INTO VENDAS_CARTAO_CONS(VENDA_ID,DATA_VENDA)"
+                + "VALUES (?,NOW())";
         try {
+
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, venda_id);
             preparar.execute();
@@ -78,14 +80,15 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
      */
     public void cartaoStart(CartaoConsumacao cartao) {
 
-        String sql = "INSERT INTO CARTOES(NUMERO_CARTAO , SALDO_CARTAO) VALUES(?,?)";
+        String sql = "INSERT INTO CARTOES(CARTAO_ID , SALDO_CARTAO) VALUES(?,?)";
 
         try {
             preparar = con.prepareStatement(sql);
-            preparar.setLong(1, cartao.getNumero());
+            preparar.setLong(1, cartao.getCartao_id());
             preparar.setDouble(2, cartao.getSaldo());
             preparar.execute();
             preparar.close();
+            con.close();
             JOptionPane.showMessageDialog(null, "Cartão Iniciado Com Sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -95,6 +98,8 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
 
     /**
      * Metodo que faz um select entre usuario e o cartão e retorna um usuario
+     * doto de um cartão
+     *
      *
      * @param numero de cartão
      * @return nome de usuario
@@ -105,7 +110,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
 
         Map<CartaoConsumacao, Usuario> cartaoUsuario = new HashMap<>();
 
-        String sql = "SELECT * FROM USUARIO_CARTAO WHERE NUMERO_CARTAO = ?";
+        String sql = "SELECT * FROM USUARIO_CARTAO WHERE CARTAO_ID= ?";
 
         try {
             preparar = con.prepareStatement(sql);
@@ -140,50 +145,16 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
      */
     public void cartaoUpdate(CartaoConsumacao cartao) {
 
-        String sql = "UPDATE CARTOES SET SALDO_CARTAO = ? WHERE NUMERO_CARTAO = ?";
+        String sql = "UPDATE CARTOES SET SALDO_CARTAO = ? WHERE CARTAO_ID = ?";
 
         try {
             preparar = con.prepareStatement(sql);
             preparar.setDouble(1, cartao.getSaldo());
-            preparar.setLong(2, cartao.getNumero());
+            preparar.setLong(2, cartao.getCartao_id());
             preparar.execute();
             preparar.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-
-    }
-
-    /**
-     * Metodo que faz Movimentação de vendas com cartão consumacação pode ser
-     * usado pra adicionar mais creditos ou baixar credidos, apenas mudando o
-     * paremetro creditos (+/-)pra positivo ou negativo
-     *
-     * @param creditos
-     * @param numero
-     * @param usuario_id
-     */
-    public void vendas(double creditos, long numero, long usuario_id) {
-        try {
-
-            CartaoConsumacao cartao = new CartaoConsumacao(cartaoSAldo(numero) + creditos, numero, usuario_id);
-            cartaoUpdate(cartao);
-            /**
-             * CRIANDO MOVIMENTAÇÕES DAS VENDAS POR USUARIO
-             */
-            double totalCompra = 0;//tenho que criar um controler pra isso
-            String sql = "INSERT INTO VENDAS_CARTAO_CONS (TOTAL_VENDA_CARTAO , USUARIO_ID)"
-                    + "VALUES (?,?)";
-            preparar = con.prepareStatement(sql);
-            preparar.setDouble(1, totalCompra);
-            preparar.setLong(2, usuario_id);
-            preparar.execute();
-            preparar.close();
-
-        } catch (SQLException ex) {
-            {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
         }
 
     }
@@ -195,21 +166,18 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
      * @param prod_id
      * @param venda_id
      * @param quant
-     * @param total
      */
-    public void produto_movimento_inserir(long prod_id, long venda_id, int quant, double total) {
+    public void produto_movimento_inserir(long prod_id, long venda_id, int quant) {
 
-        String sql = "INSERT INTO PROD_MOV (PRODUTO_ID,VENDA_ID,QUANTIDADE_VENDA,VALOR_TOTAL_VENDA,DATE_VENDA)"
-                + "VALUES(?,?,?,?,NOW())";
+        String sql = "INSERT INTO PROD_MOV (PRODUTO_ID,VENDA_ID,QUANT_PROD)"
+                + "VALUES(?,?,?)";
 
         try {
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, prod_id);
             preparar.setLong(2, venda_id);
             preparar.setInt(3, quant);
-            preparar.setDouble(4, total);
             preparar.execute();
-            preparar.close();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -223,7 +191,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
      *
      * @param venda_id
      * @param produto_id
-     * @return
+     * @return id de uma movimentação
      */
     public long pegarIdProdutoAtual(long produto_id, long venda_id) {
         long mov_id = 0;
@@ -253,22 +221,18 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
      * @param prod_id
      * @param venda_id
      * @param quant
-     * @param total
      */
-    public void produto_movimento_atulizar(long prod_id, long venda_id, int quant, double total) {
+    public void produto_movimento_atulizar(long prod_id, long venda_id, int quant) {
 
         long prodModId = pegarIdProdutoAtual(prod_id, venda_id);
         System.out.println(prodModId);
-        String sql = "UPDATE PROD_MOV SET QUANTIDADE_VENDA = ?,VALOR_TOTAL_VENDA = ?"
+        String sql = "UPDATE PROD_MOV SET QUANT_PROD = ?"
                 + "WHERE PROD_MOV_ID = ?";
         try {
             preparar = con.prepareStatement(sql);
             preparar.setInt(1, quant);
-            preparar.setDouble(2, total);
-            preparar.setLong(3, prodModId);
+            preparar.setLong(2, prodModId);
             preparar.execute();
-            preparar.close();
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -289,10 +253,64 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
             preparar.setLong(1, venda_id);
             preparar.setLong(2, prod_id);
             preparar.execute();
-            preparar.close();
-            con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    /**
+     * esse metodos atuliza a tabela de vendas_cartao_cons e comita os dados no
+     * bancos.
+     *
+     * @param venda_id
+     * @param total
+     * @param cartao_id
+     */
+    public void finalizarVendaCartao(long venda_id, double total, long cartao_id) {
+        String sql = "UPDATE VENDAS_CARTAO_CONS SET TOTAL_VENDA_CARTAO = ? , CARTAO_ID = ?"
+                + "WHERE VENDA_ID = ?";
+        try {
+            preparar = con.prepareStatement(sql);
+            preparar.setDouble(1, total);
+            preparar.setLong(2, cartao_id);
+            preparar.setLong(3, venda_id);
+            preparar.execute();
+            int finaliza = JOptionPane.showConfirmDialog(null, "Confimar a Venda ?");
+            if (finaliza == 0) {
+                preparar.close();
+                con.close();
+            } else {
+                /*Caso a a reposta da Mensagem Diago for não ou cancelar
+                 a venda sera deletada*/
+                cancelarVendaCartao(0);
+            }
+        } catch (SQLException ex) {
+            cancelarVendaCartao(0);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+
+        }
+
+    }
+
+    public void cancelarVendaCartao(double total) {
+
+        String sql = "DELETE FROM PROD_MOV WHERE VENDA_ID = ?;"
+                + "DELETE FROM VENDAS_CARTAO_CONS WHERE VENDA_ID = ?;";
+
+        long venda_id = pegarNovoIdVenda() - 1;
+
+        if (total == 0) {
+            try {
+
+                preparar = con.prepareStatement(sql);
+                preparar.setLong(1, venda_id);
+                preparar.setLong(2, venda_id);
+                preparar.execute();
+                preparar.close();
+                JOptionPane.showMessageDialog(null, "Venda Cancelada");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
     }
 
@@ -306,7 +324,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
 
         CartaoConsumacao cartao = new CartaoConsumacao();
 
-        String sql = "SELECT * FROM CARTOES WHERE NUMERO_CARTAO = ?";
+        String sql = "SELECT * FROM CARTOES WHERE CARTAO_ID = ?";
         try {
             preparar = con.prepareStatement(sql);
             //passando numero do cartão que vem do argumento
@@ -315,10 +333,9 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
             ResultSet resultado = preparar.executeQuery();
             while (resultado.next()) {
                 cartao.setCartao_id(resultado.getLong("cartao_id"));
-                cartao.setNumero(resultado.getLong("numero_cartao"));
                 cartao.setSaldo(resultado.getFloat("saldo_cartao"));
             }
-            preparar.close();
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

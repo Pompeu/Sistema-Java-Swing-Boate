@@ -33,7 +33,6 @@ public class Principal extends MainClassAbstract {
         jbCadastraUsuarios = new javax.swing.JButton();
         btnVendasCartao = new javax.swing.JButton();
         jbCadBebidas = new javax.swing.JButton();
-        bntCadastraCartao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -62,14 +61,6 @@ public class Principal extends MainClassAbstract {
             }
         });
 
-        bntCadastraCartao.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        bntCadastraCartao.setText("Cadastrar Cartão");
-        bntCadastraCartao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntCadastraCartaoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -83,13 +74,12 @@ public class Principal extends MainClassAbstract {
                         .addComponent(jbCadBebidas)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(bntCadastraCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(233, 233, 233)
                         .addComponent(btnVendasCartao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bntCadastraCartao, btnVendasCartao, jbCadBebidas, jbCadastraUsuarios});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnVendasCartao, jbCadBebidas, jbCadastraUsuarios});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,9 +89,7 @@ public class Principal extends MainClassAbstract {
                     .addComponent(jbCadastraUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbCadBebidas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntCadastraCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVendasCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnVendasCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -146,12 +134,6 @@ public class Principal extends MainClassAbstract {
         new CadastroProdutos(this).setVisible(true);
     }//GEN-LAST:event_jbCadBebidasActionPerformed
 
-    private void bntCadastraCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastraCartaoActionPerformed
-        // TODO add your handling code here:
-        this.setEnabled(false);
-        new CadastraCartao(this).setVisible(true);
-    }//GEN-LAST:event_bntCadastraCartaoActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -188,7 +170,6 @@ public class Principal extends MainClassAbstract {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntCadastraCartao;
     private javax.swing.JButton btnVendasCartao;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbCadBebidas;

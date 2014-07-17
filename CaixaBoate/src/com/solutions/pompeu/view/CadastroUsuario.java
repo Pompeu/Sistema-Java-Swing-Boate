@@ -27,7 +27,7 @@ public class CadastroUsuario extends MainClassAbstract {
 
     public CadastroUsuario(Principal principal) {
         this();
-        this.princiapal = principal;
+        this.principal = principal;
     }
 
     /**
@@ -251,8 +251,8 @@ public class CadastroUsuario extends MainClassAbstract {
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         this.dispose();
-        princiapal.setEnabled(true);
-        princiapal.toFront();
+        principal.setEnabled(true);
+        principal.toFront();
 
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
@@ -282,8 +282,8 @@ public class CadastroUsuario extends MainClassAbstract {
     private void jbSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSairActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        princiapal.setEnabled(true);
-        princiapal.toFront();
+        principal.setEnabled(true);
+        principal.toFront();
     }//GEN-LAST:event_jbSairActionPerformed
 
     /**

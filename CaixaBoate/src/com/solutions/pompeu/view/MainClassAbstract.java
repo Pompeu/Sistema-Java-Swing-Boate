@@ -24,7 +24,7 @@ public abstract class MainClassAbstract extends javax.swing.JFrame {
     /**
      * Classe principal da tela principal trata aquie
      */
-    protected Principal princiapal;
+    protected Principal principal;
 
     public MainClassAbstract() {
 
@@ -102,15 +102,15 @@ public abstract class MainClassAbstract extends javax.swing.JFrame {
 
     private void jmSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSairActionPerformed
         this.dispose();
-        princiapal.setEnabled(true);
-        princiapal.toFront();
+        principal.setEnabled(true);
+        principal.toFront();
     }//GEN-LAST:event_jmSairActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         this.dispose();
-        princiapal.setEnabled(true);
-        princiapal.toFront();
+        principal.setEnabled(true);
+        principal.toFront();
     }//GEN-LAST:event_formWindowClosing
 
     /**
