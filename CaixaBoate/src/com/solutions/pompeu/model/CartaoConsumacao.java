@@ -24,11 +24,12 @@ public class CartaoConsumacao {
     private long cartao_id;
     private double saldo;
     private long usurario_id;
+    private String usuario_cartao;
 
     public CartaoConsumacao() {
     }
 
-    public CartaoConsumacao(double saldo, long cartao_id) {
+    public CartaoConsumacao(long cartao_id,double saldo) {
         this.saldo = saldo;
         this.cartao_id = cartao_id;
     }
@@ -38,7 +39,7 @@ public class CartaoConsumacao {
         this.saldo = saldo;
         this.usurario_id = usurario_id;
     }
-
+    
     public long getCartao_id() {
         return cartao_id;
     }
@@ -63,4 +64,12 @@ public class CartaoConsumacao {
         this.usurario_id = usurario_id;
     }
 
+    public String getUsuario_cartao() {
+        return usuario_cartao;
+    }
+
+    public void setUsuario_cartao(String usuario_cartao) {
+        this.usuario_cartao = usuario_cartao;
+    }
+    
 }

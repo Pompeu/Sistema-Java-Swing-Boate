@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioDAO {
 
-    protected Connection con = Conectar.conect();
+    protected Connection con = Conectar.getInstance().conect();
     protected PreparedStatement preparar;
     /**
      * essa função faz cadstro de usuarios no banco de dados

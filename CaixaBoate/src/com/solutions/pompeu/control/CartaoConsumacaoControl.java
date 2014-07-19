@@ -101,7 +101,7 @@ public class CartaoConsumacaoControl {
 
     public void atulizarSaldoCartaoPosvenda(double total_venda, long cartao_id) {
         CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
-        CartaoConsumacao cartao = new CartaoConsumacao(cartaoDAO.cartaoSAldo(cartao_id) + total_venda, cartao_id);
+        CartaoConsumacao cartao = new CartaoConsumacao(cartao_id,cartaoDAO.cartaoSAldo(cartao_id) + total_venda);
         cartaoDAO.cartaoUpdate(cartao);
    }
 

@@ -621,7 +621,9 @@ public class VendasCartaoConsumacao extends JFrame {
             fechar++;
             if (fechar == 3) {
                 /*chamdno o evento do botão cancelar venda*/
-                btnDelatarActionPerformed(evt);
+                int total_cancelar = 0;
+                CartaoConsumacaoControl cartaoControl = new CartaoConsumacaoControl();
+                cartaoControl.cancelarVendaCartao(total_cancelar);
                 this.dispose();
                 principal.setEnabled(true);
                 principal.toFront();

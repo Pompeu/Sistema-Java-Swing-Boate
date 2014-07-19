@@ -26,13 +26,26 @@ import javax.swing.JOptionPane;
  */
 public class Conectar {
 
-    public static Connection conect() {
+    private static Conectar c = null;
+
+    private Conectar() {
+
+    }
+
+    public static Conectar getInstance() {
+        if (c == null) {
+            c = new Conectar();
+        }
+        return c;
+    }
+
+    public Connection conect() {
 
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cartao", "postgres",
                     "1234");
-            //JOptionPane.showMessageDialog(null, "Online");
+            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

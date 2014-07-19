@@ -5,14 +5,16 @@
  */
 package testes;
 
-import com.solutions.pompeu.control.CartaoConsumacaoControl;
+import com.solutions.pompeu.control.CartaoConsumacaoCrudControl;
+import com.solutions.pompeu.model.ModeloTabelaCartaol;
 import com.solutions.pompeu.model.CartaoConsumacao;
 import com.solutions.pompeu.model.CartaoConsumacaoDAO;
 import com.solutions.pompeu.model.Produto;
 import com.solutions.pompeu.model.ProdutoDAO;
 import com.solutions.pompeu.model.Usuario;
-import com.solutions.pompeu.model.UsuarioDAO;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
 
 /**
  *
@@ -21,31 +23,12 @@ import java.util.List;
 public class TextaConeccao {
 
     public static void main(String[] args) {
-        prod_ven_atu();
-    }
-    public static void prod_ven_atu(){
-        //CartaoConsumacaoDAO cdao = new CartaoConsumacaoDAO();
-        CartaoConsumacaoControl cdao = new CartaoConsumacaoControl();
-        cdao.finalizarVendaCartao(1,80, 1);
-    }
-    public static void cadvendas() {
-        CartaoConsumacaoDAO cdao = new CartaoConsumacaoDAO();
 
-        Long a = cdao.inserirIdVenda();
-        System.out.println(a);
-
-    }
-
-    public static void cadUser() {
-        Usuario usuario = new Usuario("Pompeu", "552525");
-        UsuarioDAO usu = new UsuarioDAO();
-        System.out.println(usu.logar(usuario));
     }
 
     public static void cadCartao() {
-        CartaoConsumacao cartao = new CartaoConsumacao(35, 25, 6);
-        CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
-        cartaoDAO.cartaoStart(cartao);
+        CartaoConsumacaoCrudControl cartao = new CartaoConsumacaoCrudControl();
+        cartao.cadastraCartao(3, "Pompeu", 999.00);
     }
 
     public static void mostraSaldoCartao() {
@@ -53,15 +36,10 @@ public class TextaConeccao {
         System.out.println(cartaoDAO.cartaoSAldo(15));
     }
 
-    public static void updateCartao(double creditos, long num) {
-        CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
-        System.out.println("Antes :" + cartaoDAO.cartaoSAldo(num));
-        CartaoConsumacao cartao = new CartaoConsumacao(cartaoDAO.cartaoSAldo(num) + creditos, num);
-        cartaoDAO.cartaoUpdate(cartao);
-        System.out.println("Depois :" + cartaoDAO.cartaoSAldo(num));
+    public static void updateCartao(long id, double saldo) {
+        CartaoConsumacaoCrudControl cartao = new CartaoConsumacaoCrudControl();
+        cartao.atulizarCartao(id, saldo);
     }
-
- 
 
     public static void cadProd() {
         Produto p = new Produto("suco", 10.00);

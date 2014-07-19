@@ -17,10 +17,10 @@ package com.solutions.pompeu.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -78,7 +78,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
      *
      * @param cartao
      */
-    public void cartaoStart(CartaoConsumacao cartao) {
+    public void cadastraCartao(CartaoConsumacao cartao) {
 
         String sql = "INSERT INTO CARTOES(CARTAO_ID , SALDO_CARTAO) VALUES(?,?)";
 
@@ -89,7 +89,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
             preparar.execute();
             preparar.close();
             con.close();
-            JOptionPane.showMessageDialog(null, "Cartão Iniciado Com Sucesso");
+            JOptionPane.showMessageDialog(null, "Cartão cadastrado com Sucesso !!!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -98,7 +98,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
 
     /**
      * Metodo que faz um select entre usuario e o cartão e retorna um usuario
-     * doto de um cartão
+     * dono de um cartão
      *
      *
      * @param numero de cartão
@@ -110,7 +110,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
 
         Map<CartaoConsumacao, Usuario> cartaoUsuario = new HashMap<>();
 
-        String sql = "SELECT * FROM USUARIO_CARTAO WHERE CARTAO_ID= ?";
+        String sql = "SELECT * FROM USUARIO_CARTAO WHERE CARTAO_ID = ?";
 
         try {
             preparar = con.prepareStatement(sql);
@@ -118,7 +118,6 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
             ResultSet resultado = preparar.executeQuery();
 
             while (resultado.next()) {
-
                 usuario.setNome(resultado.getString("nome_usuario"));
                 usuario.setUsuario_id(resultado.getLong("usuario_id"));
                 cartaoUsuario.put(cartao, usuario);
@@ -128,13 +127,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
-        }/*
-         try {
-         nome = cartaoUsuario.values().iterator().next().getNome();
-         } catch (NoSuchElementException ex) {
-         JOptionPane.showMessageDialog(null, "Numero Não Econtrado");
-         }*/
-
+        }
         return usuario;
     }
 
@@ -157,6 +150,75 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
 
+    }
+
+    /**
+     * esse metodo deletar um cartão do banco de dados
+     *
+     * @param cartao
+     */
+    public void deltarCartao(CartaoConsumacao cartao) {
+        String sql = "DELETE FROM CARTOES WHERE CARTAO_ID = ?";
+
+        try {
+            preparar = con.prepareStatement(sql);
+            preparar.setLong(1, cartao.getCartao_id());
+            preparar.execute();
+            preparar.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
+    }
+
+    /**
+     * esse metodo me restorna um cartão e seus dados e faz a busca usando seu
+     * id
+     *
+     * @param id
+     * @return
+     */
+    public CartaoConsumacao BuscarCartao(long id) {
+        CartaoConsumacao cartao = new CartaoConsumacao();
+
+        String sql = "SELECT * FROM CARTOES WHERE CARTAO_ID = ?";
+
+        try {
+            preparar = con.prepareStatement(sql);
+            preparar.setLong(1, id);
+            ResultSet resultado = preparar.executeQuery();
+            while (resultado.next()) {
+                cartao.setCartao_id(resultado.getLong("cartao_id"));
+                cartao.setSaldo(resultado.getDouble("saldo_cartao"));
+            }
+            preparar.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
+        return cartao;
+    }
+
+    public ArrayList ListaTodos() {
+
+        ArrayList listaCartao = new ArrayList<>();
+
+        String sql = "SELECT * FROM CARTOES ORDER BY CARTAO_ID";
+
+        try {
+            preparar = con.prepareStatement(sql);
+            ResultSet resultado = preparar.executeQuery();
+
+            while (resultado.next()) {
+                listaCartao.add(new Object[]{resultado.getLong("cartao_id"),
+                    resultado.getLong("saldo_cartao")});
+            }
+            preparar.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return listaCartao;
     }
 
     /**
