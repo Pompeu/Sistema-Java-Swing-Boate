@@ -16,18 +16,18 @@ import javax.swing.JOptionPane;
  */
 public class CadastroUsuarios extends MainClassAbstract {
 
-    /**
-     * Creates new form CadastroUsuario
-     */
-    public CadastroUsuarios() {
+    private static CadastroUsuarios c = null;
+
+    private CadastroUsuarios() {
         initComponents();
-        //centralizando janela
         this.setLocationRelativeTo(null);
     }
 
-    public CadastroUsuarios(Principal principal) {
-        this();
-        this.principal = principal;
+    public static CadastroUsuarios getInstace() {
+        if (c == null) {
+            c = new CadastroUsuarios();
+        }
+        return c;
     }
 
     /**
@@ -137,11 +137,6 @@ public class CadastroUsuarios extends MainClassAbstract {
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Sair");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
-            }
-        });
         fileMenu.add(exitMenuItem);
 
         menuBar.add(fileMenu);
@@ -249,13 +244,6 @@ public class CadastroUsuarios extends MainClassAbstract {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        this.dispose();
-        principal.setEnabled(true);
-        principal.toFront();
-
-    }//GEN-LAST:event_exitMenuItemActionPerformed
-
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         // TODO add your handling code here:
         /**
@@ -282,8 +270,8 @@ public class CadastroUsuarios extends MainClassAbstract {
     private void jbSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSairActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        principal.setEnabled(true);
-        principal.toFront();
+        Principal.getInstace().setEnabled(true);
+        Principal.getInstace().toFront();
     }//GEN-LAST:event_jbSairActionPerformed
 
     /**
@@ -316,7 +304,7 @@ public class CadastroUsuarios extends MainClassAbstract {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroUsuarios().setVisible(true);
+               getInstace().setVisible(true);
             }
         });
     }

@@ -16,6 +16,10 @@
 package com.solutions.pompeu.view;
 
 import com.solutions.pompeu.control.CartaoConsumacaoCrudControl;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,18 +27,23 @@ import javax.swing.JOptionPane;
  * @author Pompeu
  */
 public class CadastroCartoes extends MainClassAbstract {
-    private static CadastroCartoes c =  null;
 
+    private static CadastroCartoes c = null;
+    protected NumberFormat nf = new DecimalFormat("R$ #,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
     private final CartaoConsumacaoCrudControl cartao = new CartaoConsumacaoCrudControl();
-    
-    public static CadastroCartoes getInstace(){
-        if (c == null){
+
+    public static CadastroCartoes getInstace() {
+        if (c == null) {
             c = new CadastroCartoes();
         }
         return c;
     }
+
     private CadastroCartoes() {
         initComponents();
+        btnExcluir.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnSalvar.setEnabled(false);
     }
 
     /**
@@ -55,18 +64,22 @@ public class CadastroCartoes extends MainClassAbstract {
         tfNumeroCartao = new javax.swing.JTextField();
         tfNomeProprietario = new javax.swing.JTextField();
         tfsaldo = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        bntVoltarTodos = new javax.swing.JButton();
-        bntVoltar = new javax.swing.JButton();
-        bntAvancar = new javax.swing.JButton();
-        bntAvancarTodos = new javax.swing.JButton();
+        jSsaldo = new javax.swing.JSpinner();
         jPanel4 = new javax.swing.JPanel();
-        bntNovo = new javax.swing.JButton();
-        bntAtualizar = new javax.swing.JButton();
-        bntDeletar = new javax.swing.JButton();
-        BntPequisar = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        btnPequisar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        iMenssagem = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        bntVoltar = new javax.swing.JButton();
+        bntVoltarTodos = new javax.swing.JButton();
+        bntAvancarTodos = new javax.swing.JButton();
+        bntAvancar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         jLabel1.setText("Número Cartao");
@@ -87,7 +100,7 @@ public class CadastroCartoes extends MainClassAbstract {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,19 +111,23 @@ public class CadastroCartoes extends MainClassAbstract {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         tfSaldoInicial.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         tfNumeroCartao.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        tfNumeroCartao.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        tfNumeroCartao.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         tfNomeProprietario.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        tfNomeProprietario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        tfNomeProprietario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         tfsaldo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        tfsaldo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        tfsaldo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        tfsaldo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        jSsaldo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jSsaldo.setModel(new javax.swing.SpinnerNumberModel(10, 10, 100, 10));
 
         javax.swing.GroupLayout tfSaldoInicialLayout = new javax.swing.GroupLayout(tfSaldoInicial);
         tfSaldoInicial.setLayout(tfSaldoInicialLayout);
@@ -122,80 +139,62 @@ public class CadastroCartoes extends MainClassAbstract {
                     .addComponent(tfNomeProprietario)
                     .addGroup(tfSaldoInicialLayout.createSequentialGroup()
                         .addGroup(tfSaldoInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfsaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfNumeroCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 433, Short.MAX_VALUE)))
+                            .addComponent(tfNumeroCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(tfSaldoInicialLayout.createSequentialGroup()
+                                .addComponent(tfsaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jSsaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 224, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         tfSaldoInicialLayout.setVerticalGroup(
             tfSaldoInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tfSaldoInicialLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tfNumeroCartao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tfSaldoInicialLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfNumeroCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(tfNomeProprietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(tfsaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGroup(tfSaldoInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tfsaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(tfSaldoInicialLayout.createSequentialGroup()
+                        .addComponent(jSsaldo)
+                        .addGap(1, 1, 1)))
+                .addContainerGap())
         );
 
-        bntVoltarTodos.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        bntVoltarTodos.setText("<<");
-
-        bntVoltar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        bntVoltar.setText("<");
-
-        bntAvancar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        bntAvancar.setText(">");
-
-        bntAvancarTodos.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        bntAvancarTodos.setText(">>");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(bntVoltarTodos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bntVoltar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bntAvancar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bntAvancarTodos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(bntVoltarTodos)
-                .addComponent(bntVoltar)
-                .addComponent(bntAvancar)
-                .addComponent(bntAvancarTodos))
-        );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bntAvancar, bntAvancarTodos, bntVoltar, bntVoltarTodos});
-
-        bntNovo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        bntNovo.setText("Novo");
-        bntNovo.addActionListener(new java.awt.event.ActionListener() {
+        btnNovo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntNovoActionPerformed(evt);
+                btnNovoActionPerformed(evt);
             }
         });
 
-        bntAtualizar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        bntAtualizar.setText("Atualizar");
+        btnExcluir.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        btnExcluir.setText("Excluir");
 
-        bntDeletar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        bntDeletar.setText("Deletar");
-
-        BntPequisar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        BntPequisar.setText("Pesquisar");
-        BntPequisar.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BntPequisarActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnPequisar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        btnPequisar.setText("Pesquisar");
+        btnPequisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPequisarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -205,29 +204,93 @@ public class CadastroCartoes extends MainClassAbstract {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bntNovo)
-                .addGap(18, 18, 18)
-                .addComponent(bntAtualizar)
-                .addGap(18, 18, 18)
-                .addComponent(bntDeletar)
-                .addGap(18, 18, 18)
-                .addComponent(BntPequisar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSalvar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExcluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(btnPequisar)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jPanel4Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {BntPequisar, bntAtualizar, bntDeletar, bntNovo});
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnExcluir, btnNovo, btnPequisar, btnSalvar});
 
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntNovo)
-                    .addComponent(bntAtualizar)
-                    .addComponent(bntDeletar)
-                    .addComponent(BntPequisar))
-                .addContainerGap())
+                    .addComponent(btnNovo)
+                    .addComponent(btnExcluir)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnPequisar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnExcluir, btnNovo, btnPequisar, btnSalvar});
+
+        iMenssagem.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        iMenssagem.setForeground(java.awt.Color.red);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(iMenssagem)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(iMenssagem))
+        );
+
+        bntVoltar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        bntVoltar.setText("<");
+
+        bntVoltarTodos.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        bntVoltarTodos.setText("<<");
+
+        bntAvancarTodos.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        bntAvancarTodos.setText(">>");
+
+        bntAvancar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        bntAvancar.setText(">");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(59, Short.MAX_VALUE)
+                .addComponent(bntVoltarTodos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bntVoltar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bntAvancar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bntAvancarTodos)
+                .addGap(45, 45, 45))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bntVoltarTodos)
+                    .addComponent(bntVoltar)
+                    .addComponent(bntAvancar)
+                    .addComponent(bntAvancarTodos)))
+        );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bntAvancar, bntAvancarTodos, bntVoltar, bntVoltarTodos});
 
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
@@ -237,75 +300,152 @@ public class CadastroCartoes extends MainClassAbstract {
                 .addContainerGap()
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfSaldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(53, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfSaldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
-
-        jpPrincipalLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jPanel4, tfSaldoInicial});
-
         jpPrincipalLayout.setVerticalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPrincipalLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addGap(0, 17, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfSaldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tfSaldoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
-
-        jpPrincipalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanel2, tfSaldoInicial});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bntNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntNovoActionPerformed
-
+    private void btnPequisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPequisarActionPerformed
         long numero;
-        String nome;
         double saldo;
+        iMenssagem.setText(null);
+        jSsaldo.setEnabled(true);
+
         try {
             numero = Long.parseLong(tfNumeroCartao.getText());
+            if (numero != 0 && tfNumeroCartao.getText() != null) {
+                saldo = cartao.buscaPorNumero(numero).getSaldo();
+                if (cartao == null) {
+                    iMenssagem.setText("Cartão não econtrado");
+                } else {
+                    tfsaldo.setText(String.valueOf(nf.format(saldo)));
+                    btnExcluir.setEnabled(true);
+                    btnSalvar.setEnabled(true);
+                    btnCancelar.setEnabled(true);
+                    btnNovo.setEnabled(false);
+                    desabilistarCampos(false);
+                }
+            }
+        } catch (NumberFormatException ex) {
+            iMenssagem.setText("Digite um numero de cartao");
+            tfsaldo.setText(null);
+            tfNumeroCartao.setText(null);
+            tfNomeProprietario.setText(null);
+        }
+    }//GEN-LAST:event_btnPequisarActionPerformed
+
+    /**
+     * esse é o metodo do Botão Cancelar ele apenas limpas os campos abilita o
+     * botão pesquisar e o botão novo e desabilita os demais. e abre uma caixa
+     * de dialogo perguntando se quer sair da tela
+     *
+     * @param evt
+     */
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        limparcampos();
+        btnCancelar.setEnabled(false);
+        btnNovo.setEnabled(true);
+        btnExcluir.setEnabled(false);
+        btnSalvar.setEnabled(false);
+        tfNumeroCartao.setEditable(true);
+        tfNomeProprietario.setEditable(true);
+        int sair = JOptionPane.showConfirmDialog(null, "Deseja Sair da tela de Cartões");
+        if (sair == 0) {
+            this.dispose();
+            Principal.getInstace().setEnabled(true);
+            Principal.getInstace().toFront();
+        }
+       
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:
+        long num = 0;
+        String nome = "";
+        double saldo = 0;
+        jSsaldo.setEnabled(false);
+        try {
+            num = Long.parseLong(tfNumeroCartao.getText());
             nome = tfNomeProprietario.getText();
             saldo = Double.parseDouble(tfsaldo.getText());
-            if (numero != 0 && saldo > 50) {
-                cartao.cadastraCartao(numero, nome, saldo);
-            } else {
-                JOptionPane.showMessageDialog(this, "Algums Campo em Branco");
-            }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage() + "Tem algum Campo em branco");
+            iMenssagem.setText("Numero de Cartão invalido");
+            iMenssagem.setText("Saldo em branco e/ou Valor Invalido");
+        }
+        if (!nome.isEmpty() && saldo > 50) {
+            cartao.cadastraCartao(num, nome, saldo);
             limparcampos();
+        } else {
+            iMenssagem.setText("Saldo Inicial Inferior a R$ 50,00 e/ou nome em branco");
         }
 
-    }//GEN-LAST:event_bntNovoActionPerformed
+    }//GEN-LAST:event_btnNovoActionPerformed
 
-    private void BntPequisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BntPequisarActionPerformed
-        // TODO add your handling code here:
-        ListaCartoes.getInstace().setVisible(true);
-    }//GEN-LAST:event_BntPequisarActionPerformed
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+
+        long num;
+        double saldo = 0;
+
+        String saldoTest = jSsaldo.getValue().toString();
+        try {
+            num = Integer.parseInt(tfNumeroCartao.getText());
+            if (tfsaldo.getText().length() == 9) {//se campo valor tiver 3 digitos
+                saldo = Double.parseDouble(tfsaldo.getText().substring(2, 6));
+            } else if (tfsaldo.getText().length() == 8) { // se campo saldo tiver 2 digitos
+                saldo = Double.parseDouble(tfsaldo.getText().substring(2, 5));
+            }
+            saldo += Integer.parseInt(saldoTest);
+            cartao.atulizarCartao(num, saldo);
+            iMenssagem.setText("Novo Saldo do cartão nº " + num + " é R$ " + saldo + "0");
+        } catch (NumberFormatException e) {
+            iMenssagem.setText("Saldo Invalido" + e.getMessage());
+        }
+        desabilistarCampos(true);
+        limparcampos();
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,20 +484,24 @@ public class CadastroCartoes extends MainClassAbstract {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BntPequisar;
-    private javax.swing.JButton bntAtualizar;
     private javax.swing.JButton bntAvancar;
     private javax.swing.JButton bntAvancarTodos;
-    private javax.swing.JButton bntDeletar;
-    private javax.swing.JButton bntNovo;
     private javax.swing.JButton bntVoltar;
     private javax.swing.JButton bntVoltarTodos;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnPequisar;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JLabel iMenssagem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JSpinner jSsaldo;
     private javax.swing.JPanel jpPrincipal;
     private javax.swing.JTextField tfNomeProprietario;
     private javax.swing.JTextField tfNumeroCartao;
@@ -368,5 +512,12 @@ public class CadastroCartoes extends MainClassAbstract {
         tfNomeProprietario.setText(null);
         tfNumeroCartao.setText(null);
         tfsaldo.setText(null);
+        iMenssagem.setText(null);
+    }
+
+    private void desabilistarCampos(boolean event) {
+        tfNomeProprietario.setEditable(event);
+        tfsaldo.setEditable(event);
+        tfNumeroCartao.setEditable(event);
     }
 }

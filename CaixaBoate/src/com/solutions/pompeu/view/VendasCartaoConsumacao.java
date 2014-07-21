@@ -49,6 +49,7 @@ public class VendasCartaoConsumacao extends JFrame {
         ajustarColunas();
         this.setLocation(300, 80);
         hablitarDesabilitacapus(true);
+        btnInserir.setEnabled(false);
         this.venda_id = new CartaoConsumacaoDAO().inserirIdVenda();
     }
 
@@ -101,6 +102,7 @@ public class VendasCartaoConsumacao extends JFrame {
         setTitle("Vendas");
         setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 255, 255), new java.awt.Color(0, 102, 102))));
         jPanel1.setForeground(java.awt.Color.red);
 
         jLabel1.setText("Numero Cartao");
@@ -149,6 +151,17 @@ public class VendasCartaoConsumacao extends JFrame {
             }
         });
 
+        tfQunatidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfQunatidadeActionPerformed(evt);
+            }
+        });
+        tfQunatidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfQunatidadeFocusGained(evt);
+            }
+        });
+
         jlSaldo.setForeground(java.awt.Color.red);
 
         jLabel7.setText("Saldo Atual do Cartao");
@@ -156,7 +169,7 @@ public class VendasCartaoConsumacao extends JFrame {
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         tblVenda.setAutoCreateRowSorter(true);
-        tblVenda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        tblVenda.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 102, 153), new java.awt.Color(0, 153, 153)));
         tblVenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -219,7 +232,7 @@ public class VendasCartaoConsumacao extends JFrame {
                 .addContainerGap())
         );
 
-        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 102, 153), new java.awt.Color(0, 153, 153)));
 
         jLabel6.setText("Saldo Futuro do  Cartao");
 
@@ -294,12 +307,12 @@ public class VendasCartaoConsumacao extends JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanel6, jPanel7});
 
-        jPanel9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 102, 153), new java.awt.Color(0, 153, 153)));
 
         btnFecharVenda.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         btnFecharVenda.setText("Confirmar Venda");
@@ -396,7 +409,7 @@ public class VendasCartaoConsumacao extends JFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAtulizar, btnDelatar, btnInserir});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {tfProduto, tfQunatidade});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {tfNumeroCartao, tfProduto, tfQunatidade});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,7 +449,7 @@ public class VendasCartaoConsumacao extends JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {tfNumeroCartao, tfProduto, tfQunatidade});
@@ -465,6 +478,7 @@ public class VendasCartaoConsumacao extends JFrame {
     private void tfNumeroCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNumeroCartaoActionPerformed
         // TODO add your handling code here:
         long numeroCartao = 0;
+        
         try {
             numeroCartao = Long.parseLong(tfNumeroCartao.getText());
         } catch (NumberFormatException ex) {
@@ -485,12 +499,14 @@ public class VendasCartaoConsumacao extends JFrame {
             jlMensagem.setText("Numero invalido do cartao");
         }
         hablitarDesabilitacapus(false);
+        
 
     }//GEN-LAST:event_tfNumeroCartaoActionPerformed
 
     private void tfProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfProdutoActionPerformed
         // TODO add your handling code here:
         tfQunatidade.setText(null);
+        tfQunatidade.setEditable(true);
         long numero = 0;
         try {
             numero = Long.parseLong(tfProduto.getText());
@@ -504,12 +520,13 @@ public class VendasCartaoConsumacao extends JFrame {
         valorun = prodDao2.buscarProdutoId(numero).getPreco();
         jlNomeProduto.setText(nomeProduto);
 
+
     }//GEN-LAST:event_tfProdutoActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         jlMensagem.setText(null);
         tfNumeroCartao.setEditable(false);
-
+        btnInserir.setEnabled(false);
         DefaultTableModel modelo = (DefaultTableModel) tblVenda.getModel();
 
         String quantidade = tfQunatidade.getText();
@@ -661,6 +678,19 @@ public class VendasCartaoConsumacao extends JFrame {
         }
     }//GEN-LAST:event_btnCancelarVendaActionPerformed
 
+    private void tfQunatidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQunatidadeActionPerformed
+        // TODO add your handling code here:
+        tfQunatidade.setEditable(false);
+        tfQunatidade.setText(null);
+        tfProduto.setText(null);
+        
+    }//GEN-LAST:event_tfQunatidadeActionPerformed
+
+    private void tfQunatidadeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfQunatidadeFocusGained
+        // TODO add your handling code here:
+        btnInserir.setEnabled(true);
+    }//GEN-LAST:event_tfQunatidadeFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -774,7 +804,7 @@ public class VendasCartaoConsumacao extends JFrame {
         tfNumeroCartao.setEditable(habilita);
         tfProduto.setEditable(!habilita);
         tfQunatidade.setEditable(!habilita);
-        btnInserir.setEnabled(!habilita);
+        btnInserir.setEnabled(habilita);
         btnAtulizar.setEnabled(!habilita);
         btnDelatar.setEnabled(!habilita);
         btnFecharVenda.setEnabled(!habilita);

@@ -6,15 +6,12 @@
 package testes;
 
 import com.solutions.pompeu.control.CartaoConsumacaoCrudControl;
-import com.solutions.pompeu.model.ModeloTabelaCartaol;
-import com.solutions.pompeu.model.CartaoConsumacao;
+import com.solutions.pompeu.control.ProdutosControl;
 import com.solutions.pompeu.model.CartaoConsumacaoDAO;
 import com.solutions.pompeu.model.Produto;
 import com.solutions.pompeu.model.ProdutoDAO;
 import com.solutions.pompeu.model.Usuario;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JTable;
 
 /**
  *
@@ -23,7 +20,13 @@ import javax.swing.JTable;
 public class TextaConeccao {
 
     public static void main(String[] args) {
-
+        ProdutosControl pdo = new ProdutosControl();
+        List<Produto> lista = pdo.listaProdutos();
+        for (Produto lista1 : lista) {
+            System.err.println(lista1.getNome()+" "+lista1.getPreco());
+        }
+        
+        
     }
 
     public static void cadCartao() {

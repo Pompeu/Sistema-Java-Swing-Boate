@@ -18,9 +18,6 @@ package com.solutions.pompeu.control;
 import com.solutions.pompeu.model.CartaoConsumacao;
 import com.solutions.pompeu.model.CartaoConsumacaoDAO;
 import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -36,7 +33,7 @@ public class CartaoConsumacaoCrudControl {
 
     public void atulizarCartao(long id, double saldo) {
         CartaoConsumacaoDAO cartaoDAO = new CartaoConsumacaoDAO();
-        CartaoConsumacao cartao = new CartaoConsumacao(id, cartaoDAO.cartaoSAldo(id) + saldo);
+        CartaoConsumacao cartao = new CartaoConsumacao(id, saldo);
         cartaoDAO.cartaoUpdate(cartao);
     }
 

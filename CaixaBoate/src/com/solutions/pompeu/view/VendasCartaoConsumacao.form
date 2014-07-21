@@ -43,6 +43,18 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
+            <CompoundBorder>
+              <Border PropertyName="inside" info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder>
+                  <Color PropertyName="highlight" blue="ff" green="ff" red="66" type="rgb"/>
+                  <Color PropertyName="shadow" blue="66" green="66" red="0" type="rgb"/>
+                </EtchetBorder>
+              </Border>
+            </CompoundBorder>
+          </Border>
+        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" id="red" palette="1" red="ff" type="palette"/>
         </Property>
@@ -66,7 +78,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="tfQunatidade" linkSize="6" min="-2" pref="34" max="-2" attributes="0"/>
                                       <Component id="tfProduto" linkSize="6" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="tfNumeroCartao" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="tfNumeroCartao" linkSize="6" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -163,7 +175,7 @@
                       <Component id="jPanel9" linkSize="14" min="-2" max="-2" attributes="0"/>
                       <Component id="jPanel3" linkSize="14" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -239,6 +251,10 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="tfQunatidade">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfQunatidadeActionPerformed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfQunatidadeFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jlSaldo">
           <Properties>
@@ -285,8 +301,11 @@
                   <Properties>
                     <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                        <LineBorder roundedCorners="true" thickness="2"/>
+                      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                        <EtchetBorder>
+                          <Color PropertyName="highlight" blue="99" green="66" red="0" type="rgb"/>
+                          <Color PropertyName="shadow" blue="99" green="99" red="0" type="rgb"/>
+                        </EtchetBorder>
                       </Border>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
@@ -377,8 +396,11 @@
         <Container class="javax.swing.JPanel" name="jPanel3">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder roundedCorners="true" thickness="3"/>
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder>
+                  <Color PropertyName="highlight" blue="99" green="66" red="0" type="rgb"/>
+                  <Color PropertyName="shadow" blue="99" green="99" red="0" type="rgb"/>
+                </EtchetBorder>
               </Border>
             </Property>
           </Properties>
@@ -402,7 +424,7 @@
                           <Component id="jPanel7" linkSize="13" min="-2" max="-2" attributes="0"/>
                           <Component id="jPanel6" linkSize="13" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                      <EmptySpace pref="17" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -505,8 +527,11 @@
         <Container class="javax.swing.JPanel" name="jPanel9">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder roundedCorners="true" thickness="2"/>
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder>
+                  <Color PropertyName="highlight" blue="99" green="66" red="0" type="rgb"/>
+                  <Color PropertyName="shadow" blue="99" green="99" red="0" type="rgb"/>
+                </EtchetBorder>
               </Border>
             </Property>
           </Properties>
