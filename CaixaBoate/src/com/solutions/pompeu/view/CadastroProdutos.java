@@ -7,7 +7,11 @@ package com.solutions.pompeu.view;
 
 import com.solutions.pompeu.model.Produto;
 import com.solutions.pompeu.model.ProdutoDAO;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,15 +21,15 @@ import javax.swing.JOptionPane;
 public class CadastroProdutos extends MainClassAbstract {
 
     private static CadastroProdutos c = null;
-    protected int i = 0;
-    ProdutoDAO pdao = new ProdutoDAO();
-    protected List<Produto> lista = pdao.buscarProdutos();
+    protected int i = 0, sizelist = 0;
+    private final NumberFormat nf = new DecimalFormat("R$ #,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
 
     /**
      * Creates new form CadProd
      */
     private CadastroProdutos() {
         initComponents();
+        limparcampos();
         this.setLocationRelativeTo(null);
     }
 
@@ -61,16 +65,21 @@ public class CadastroProdutos extends MainClassAbstract {
         jLabel1 = new javax.swing.JLabel();
         jpAcao = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
-        btnSalvar = new javax.swing.JButton();
+        btnalterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnPesquisar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Produtos");
 
+        jpNavegacao.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 102), new java.awt.Color(102, 255, 102)));
+
+        btnBackall.setBackground(new java.awt.Color(255, 255, 255));
         btnBackall.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        btnBackall.setText("<<");
+        btnBackall.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/backall.png"))); // NOI18N
+        btnBackall.setToolTipText("IR AO PRIMEIRO ITEM");
         btnBackall.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackallActionPerformed(evt);
@@ -78,7 +87,8 @@ public class CadastroProdutos extends MainClassAbstract {
         });
 
         btnBack.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/Back.png"))); // NOI18N
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/back.png"))); // NOI18N
+        btnBack.setToolTipText("VOLTAR");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
@@ -86,7 +96,8 @@ public class CadastroProdutos extends MainClassAbstract {
         });
 
         bntForward.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        bntForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/Next.png"))); // NOI18N
+        bntForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/forward.png"))); // NOI18N
+        bntForward.setToolTipText("AVANÇAR");
         bntForward.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntForwardActionPerformed(evt);
@@ -94,7 +105,8 @@ public class CadastroProdutos extends MainClassAbstract {
         });
 
         bntFinalList.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        bntFinalList.setText(">>");
+        bntFinalList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/forwardall.png"))); // NOI18N
+        bntFinalList.setToolTipText("IR AO ULTIMO ITEM");
         bntFinalList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntFinalListActionPerformed(evt);
@@ -107,42 +119,38 @@ public class CadastroProdutos extends MainClassAbstract {
             jpNavegacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpNavegacaoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBackall)
+                .addComponent(btnBackall, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bntForward, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bntFinalList)
-                .addGap(19, 19, 19))
+                .addComponent(bntForward, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bntFinalList, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        jpNavegacaoLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bntForward, btnBack});
-
         jpNavegacaoLayout.setVerticalGroup(
             jpNavegacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpNavegacaoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpNavegacaoLayout.createSequentialGroup()
                 .addGroup(jpNavegacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnBackall)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBackall, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntForward)
                     .addComponent(bntFinalList, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
+                .addGap(0, 2, Short.MAX_VALUE))
         );
 
-        jpNavegacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bntForward, btnBack, btnBackall});
+        jpNavegacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {bntFinalList, bntForward, btnBack, btnBackall});
 
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 102), new java.awt.Color(102, 255, 102)));
 
         tfValor.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        tfValor.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        tfValor.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 102), new java.awt.Color(102, 255, 102)));
 
         tfNome.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        tfNome.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        tfNome.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 102), new java.awt.Color(102, 255, 102)));
 
         tfId.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        tfId.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        tfId.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 102), new java.awt.Color(102, 255, 102)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -150,10 +158,10 @@ public class CadastroProdutos extends MainClassAbstract {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE))
+                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,13 +178,15 @@ public class CadastroProdutos extends MainClassAbstract {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {tfNome, tfValor});
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 102), new java.awt.Color(102, 255, 102)));
+
+        jLabel4.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel4.setText("Valor");
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel3.setText("Nome");
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel1.setText("Cód");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -194,32 +204,38 @@ public class CadastroProdutos extends MainClassAbstract {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4))
+                .addComponent(jLabel4)
+                .addContainerGap())
         );
 
+        jpAcao.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 102), new java.awt.Color(102, 255, 102)));
+
         btnNovo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/Add.png"))); // NOI18N
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/novo.png"))); // NOI18N
+        btnNovo.setToolTipText("NOVO CADASTRO");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoActionPerformed(evt);
             }
         });
 
-        btnSalvar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/Save.png"))); // NOI18N
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+        btnalterar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        btnalterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/salvar.png"))); // NOI18N
+        btnalterar.setToolTipText("SALVAR CADASTRO");
+        btnalterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
+                btnalterarActionPerformed(evt);
             }
         });
 
         btnCancelar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/Exit.png"))); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/cancelar.png"))); // NOI18N
+        btnCancelar.setToolTipText("SAIR DA TELA");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -227,7 +243,8 @@ public class CadastroProdutos extends MainClassAbstract {
         });
 
         btnExcluir.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/Delete.png"))); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/deletar.png"))); // NOI18N
+        btnExcluir.setToolTipText("DELETAR CADASTRO");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -235,7 +252,8 @@ public class CadastroProdutos extends MainClassAbstract {
         });
 
         btnPesquisar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/Search.png"))); // NOI18N
+        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com.solutions.pompeu.icons/buscar.png"))); // NOI18N
+        btnPesquisar.setToolTipText("BUSCAR ITEMS");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisarActionPerformed(evt);
@@ -246,62 +264,69 @@ public class CadastroProdutos extends MainClassAbstract {
         jpAcao.setLayout(jpAcaoLayout);
         jpAcaoLayout.setHorizontalGroup(
             jpAcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAcaoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpAcaoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnalterar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(141, 141, 141))
         );
 
-        jpAcaoLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnExcluir, btnNovo, btnPesquisar, btnSalvar});
+        jpAcaoLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnExcluir, btnNovo, btnPesquisar, btnalterar});
 
         jpAcaoLayout.setVerticalGroup(
             jpAcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpAcaoLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAcaoLayout.createSequentialGroup()
+                .addGap(0, 10, Short.MAX_VALUE)
                 .addGroup(jpAcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalvar)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnalterar)))
         );
 
-        jpAcaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnExcluir, btnNovo, btnPesquisar, btnSalvar});
+        jpAcaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnExcluir, btnNovo, btnPesquisar, btnalterar});
 
         javax.swing.GroupLayout jpPrinciapalLayout = new javax.swing.GroupLayout(jpPrinciapal);
         jpPrinciapal.setLayout(jpPrinciapalLayout);
         jpPrinciapalLayout.setHorizontalGroup(
             jpPrinciapalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPrinciapalLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrinciapalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jpAcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpPrinciapalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrinciapalLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrinciapalLayout.createSequentialGroup()
+                        .addContainerGap(291, Short.MAX_VALUE)
+                        .addComponent(jpAcao, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jpPrinciapalLayout.setVerticalGroup(
             jpPrinciapalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPrinciapalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jpPrinciapalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jpAcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPrinciapalLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addComponent(jpAcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
+        jLabel2.setForeground(java.awt.Color.red);
+        jLabel2.setText("CADASTRO DE PRODUTOS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -311,14 +336,22 @@ public class CadastroProdutos extends MainClassAbstract {
                 .addComponent(jpPrinciapal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(35, 35, 35)
                 .addComponent(jpNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jpNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jpNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel2)))
                 .addGap(18, 18, 18)
                 .addComponent(jpPrinciapal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -328,13 +361,11 @@ public class CadastroProdutos extends MainClassAbstract {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        tfId.setText(null);
-        tfNome.setText(null);
-        tfValor.setText(null);
+        limparcampos();
         abilitaDesabilitaBnt(false);
     }//GEN-LAST:event_btnNovoActionPerformed
 
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+    private void btnalterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnalterarActionPerformed
 
         double valor = 0.00;
 
@@ -342,7 +373,8 @@ public class CadastroProdutos extends MainClassAbstract {
             valor = Double.parseDouble(tfValor.getText());
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Valor Invalido");
+            tfValor.setText(null);
         }
         String nome = tfNome.getText();
 
@@ -351,7 +383,7 @@ public class CadastroProdutos extends MainClassAbstract {
         pd.cadProduto(produto);
 
         abilitaDesabilitaBnt(true);
-    }//GEN-LAST:event_btnSalvarActionPerformed
+    }//GEN-LAST:event_btnalterarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         abilitaDesabilitaBnt(true);
@@ -378,15 +410,19 @@ public class CadastroProdutos extends MainClassAbstract {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
+        ProdutoDAO pdao = new ProdutoDAO();
+        List<Produto> lista = pdao.buscarProdutos();
 
+        int j = i;
         try {
-            tfId.setText(String.valueOf(lista.get(i).getProduto_id()));
-            tfNome.setText(lista.get(i).getNome());
-            tfValor.setText(String.valueOf(lista.get(i).getPreco()));
+            tfId.setText(String.valueOf(lista.get(j).getProduto_id()));
+            tfNome.setText(lista.get(j).getNome());
+            tfValor.setText(String.valueOf(nf.format(lista.get(j).getPreco())));
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Acabou os Produtos");
             i--;
         }
+        sizelist = lista.size() - 1;
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnBackallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackallActionPerformed
@@ -410,9 +446,8 @@ public class CadastroProdutos extends MainClassAbstract {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void bntFinalListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntFinalListActionPerformed
-        i = lista.size() - 1;
+        i = sizelist;
         btnPesquisarActionPerformed(evt);
-
     }//GEN-LAST:event_bntFinalListActionPerformed
 
     /**
@@ -459,7 +494,7 @@ public class CadastroProdutos extends MainClassAbstract {
         //Component[] c;
         btnNovo.setEnabled(habilitador);
         btnExcluir.setEnabled(habilitador);
-        btnSalvar.setEnabled(!habilitador);
+        btnalterar.setEnabled(!habilitador);
         btnCancelar.setEnabled(!habilitador);
         btnPesquisar.setEnabled(habilitador);
         tfId.setEditable(habilitador);
@@ -468,6 +503,11 @@ public class CadastroProdutos extends MainClassAbstract {
          c1.setEnabled(habilitador);
          }*/
 
+    }
+    private void limparcampos(){
+        tfId.setText(null);
+        tfNome.setText(null);
+        tfValor.setText(null);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntFinalList;
@@ -478,8 +518,9 @@ public class CadastroProdutos extends MainClassAbstract {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisar;
-    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnalterar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;

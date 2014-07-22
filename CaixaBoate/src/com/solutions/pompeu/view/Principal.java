@@ -13,15 +13,30 @@ public class Principal extends MainClassAbstract {
 
     private static Principal p = null;
 
+    public static Principal getInstace(String funcao) {
+        if (p == null) {
+            p = new Principal();
+        }
+        if (!funcao.equals("POMPEU")) {
+            p.btnCadastrarUsuarios.setEnabled(false);
+            p.btnProdutos.setEnabled(false);
+            return p;
+        } else {
+            return p;
+        }
+    }
+
     public static Principal getInstace() {
         if (p == null) {
             p = new Principal();
         }
         return p;
+
     }
 
     private Principal() {
         initComponents();
+
         this.setLocationRelativeTo(null);
     }
 
@@ -35,9 +50,9 @@ public class Principal extends MainClassAbstract {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jbCadastraUsuarios = new javax.swing.JButton();
+        btnCadastrarUsuarios = new javax.swing.JButton();
         btnVendasCartao = new javax.swing.JButton();
-        jbCadBebidas = new javax.swing.JButton();
+        btnProdutos = new javax.swing.JButton();
         btnCadCartao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -45,11 +60,11 @@ public class Principal extends MainClassAbstract {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jbCadastraUsuarios.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jbCadastraUsuarios.setText("Cadastrar Usuarios");
-        jbCadastraUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrarUsuarios.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        btnCadastrarUsuarios.setText("Cadastrar Usuarios");
+        btnCadastrarUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCadastraUsuariosActionPerformed(evt);
+                btnCadastrarUsuariosActionPerformed(evt);
             }
         });
 
@@ -61,11 +76,11 @@ public class Principal extends MainClassAbstract {
             }
         });
 
-        jbCadBebidas.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jbCadBebidas.setText("Cadastrar Produtos");
-        jbCadBebidas.addActionListener(new java.awt.event.ActionListener() {
+        btnProdutos.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        btnProdutos.setText("Cadastrar Produtos");
+        btnProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCadBebidasActionPerformed(evt);
+                btnProdutosActionPerformed(evt);
             }
         });
 
@@ -84,12 +99,12 @@ public class Principal extends MainClassAbstract {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbCadastraUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCadastrarUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCadCartao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                        .addComponent(jbCadBebidas)
+                        .addComponent(btnProdutos)
                         .addContainerGap(20, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -97,15 +112,15 @@ public class Principal extends MainClassAbstract {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCadCartao, btnVendasCartao, jbCadBebidas, jbCadastraUsuarios});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCadCartao, btnCadastrarUsuarios, btnProdutos, btnVendasCartao});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbCadastraUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbCadBebidas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCadastrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadCartao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -113,7 +128,7 @@ public class Principal extends MainClassAbstract {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCadCartao, btnVendasCartao, jbCadBebidas, jbCadastraUsuarios});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCadCartao, btnCadastrarUsuarios, btnProdutos, btnVendasCartao});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,11 +151,11 @@ public class Principal extends MainClassAbstract {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void jbCadastraUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastraUsuariosActionPerformed
+    private void btnCadastrarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarUsuariosActionPerformed
         // TODO add your handling code here:
         this.setEnabled(false);
         CadastroUsuarios.getInstace().setVisible(true);
-    }//GEN-LAST:event_jbCadastraUsuariosActionPerformed
+    }//GEN-LAST:event_btnCadastrarUsuariosActionPerformed
 
     private void btnVendasCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasCartaoActionPerformed
         // TODO add your handling code here:
@@ -148,15 +163,15 @@ public class Principal extends MainClassAbstract {
         new VendasCartaoConsumacao(this).setVisible(true);
     }//GEN-LAST:event_btnVendasCartaoActionPerformed
 
-    private void jbCadBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadBebidasActionPerformed
+    private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
         // TODO add your handling code here:
         this.setEnabled(false);
         CadastroProdutos.getInstace().setVisible(true);
-    }//GEN-LAST:event_jbCadBebidasActionPerformed
+    }//GEN-LAST:event_btnProdutosActionPerformed
 
     private void btnCadCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadCartaoActionPerformed
         // TODO add your handling code here:
-
+        this.setEnabled(false);
         CadastroCartoes.getInstace().setVisible(true);
     }//GEN-LAST:event_btnCadCartaoActionPerformed
 
@@ -190,16 +205,16 @@ public class Principal extends MainClassAbstract {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                getInstace().setVisible(true);
+                getInstace(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadCartao;
+    private javax.swing.JButton btnCadastrarUsuarios;
+    private javax.swing.JButton btnProdutos;
     private javax.swing.JButton btnVendasCartao;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton jbCadBebidas;
-    private javax.swing.JButton jbCadastraUsuarios;
     // End of variables declaration//GEN-END:variables
 }

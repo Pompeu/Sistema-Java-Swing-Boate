@@ -24,7 +24,7 @@ public abstract class MainClassAbstract extends javax.swing.JFrame {
     /**
      * Classe principal da tela principal trata aquie
      */
-    
+   
 
     public MainClassAbstract() {
         initComponents();
@@ -102,8 +102,7 @@ public abstract class MainClassAbstract extends javax.swing.JFrame {
     private void jmSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSairActionPerformed
         this.dispose();
         Principal.getInstace().setEnabled(true);
-        Principal.getInstace().toFront();
-        
+        Principal.getInstace().toFront();        
     }//GEN-LAST:event_jmSairActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

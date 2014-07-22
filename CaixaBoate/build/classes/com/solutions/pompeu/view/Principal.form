@@ -57,13 +57,13 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jbCadastraUsuarios" linkSize="1" max="32767" attributes="0"/>
+                      <Component id="btnCadastrarUsuarios" linkSize="1" max="32767" attributes="0"/>
                       <Component id="btnCadCartao" linkSize="1" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace pref="11" max="32767" attributes="0"/>
-                          <Component id="jbCadBebidas" linkSize="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnProdutos" linkSize="1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="20" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -80,8 +80,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jbCadastraUsuarios" linkSize="2" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="jbCadBebidas" linkSize="2" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="btnCadastrarUsuarios" linkSize="2" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="btnProdutos" linkSize="2" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -94,7 +94,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jbCadastraUsuarios">
+        <Component class="javax.swing.JButton" name="btnCadastrarUsuarios">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="SansSerif" size="18" style="1"/>
@@ -102,7 +102,7 @@
             <Property name="text" type="java.lang.String" value="Cadastrar Usuarios"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbCadastraUsuariosActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarUsuariosActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnVendasCartao">
@@ -116,7 +116,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVendasCartaoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jbCadBebidas">
+        <Component class="javax.swing.JButton" name="btnProdutos">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="SansSerif" size="18" style="1"/>
@@ -124,7 +124,7 @@
             <Property name="text" type="java.lang.String" value="Cadastrar Produtos"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbCadBebidasActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProdutosActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCadCartao">
