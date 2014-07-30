@@ -15,6 +15,8 @@
  */
 package com.solutions.pompeu.model;
 
+import com.solutions.pompeu.jdbc.Conectar;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,12 +38,13 @@ public class ProdutoDAO extends UsuarioDAO {
 
         try {
             String sql = "INSERT INTO PRODUTOS(NOME_PRODUTO,PRECO_PRODUTO) VALUES (?,?)";
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setString(1, produto.getNome());
             preparar.setDouble(2, produto.getPreco());
             preparar.execute();
             preparar.close();
-            con.close();
+
             JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -57,6 +60,7 @@ public class ProdutoDAO extends UsuarioDAO {
 
         try {
             String sql = "DELETE FROM PRODUTOS WHERE PRODUTO_ID = ?";
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, produto.getProduto_id());
 
@@ -64,7 +68,7 @@ public class ProdutoDAO extends UsuarioDAO {
             if (x == 0) {
                 preparar.execute();
                 preparar.close();
-                con.close();
+
             }
 
         } catch (SQLException ex) {
@@ -84,6 +88,7 @@ public class ProdutoDAO extends UsuarioDAO {
         String sql = "SELECT * FROM PRODUTOS WHERE PRODUTO_ID = ?";
 
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, id);
             ResultSet resultado = preparar.executeQuery();
@@ -92,7 +97,6 @@ public class ProdutoDAO extends UsuarioDAO {
                 produto.setPreco(resultado.getDouble("preco_produto"));
             }
             preparar.close();
-            con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -111,6 +115,7 @@ public class ProdutoDAO extends UsuarioDAO {
 
         String sql = "SELECT * FROM PRODUTOS ORDER BY PRODUTO_ID";
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             ResultSet resultado = preparar.executeQuery();
 
@@ -122,7 +127,6 @@ public class ProdutoDAO extends UsuarioDAO {
                 listaProduto.add(produto);
             }
             preparar.close();
-            con.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

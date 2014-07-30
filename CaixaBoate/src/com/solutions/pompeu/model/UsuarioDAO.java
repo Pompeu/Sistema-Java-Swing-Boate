@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioDAO {
 
-    protected Connection con = Conectar.getInstance().conect();
+   // protected Connection con = Conectar.getInstance().conect();
     protected PreparedStatement preparar;
     /**
      * essa função faz cadstro de usuarios no banco de dados
@@ -39,7 +39,7 @@ public class UsuarioDAO {
         try {
             String sql = "INSERT INTO USUARIOS(nome_usuario,login_usuario,senha_usuario,funcao_usuario,telefone_usuario,cpf_usuario"
                     + ") VALUES (?,?,md5(?),?,?,?)";
-
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setString(1, usu.getNome());
             preparar.setString(2, usu.getLogin());
@@ -63,7 +63,7 @@ public class UsuarioDAO {
         Usuario usuLogar = null;
         try {
             String sql = "SELECT * FROM USUARIOS WHERE LOGIN_usuario = ? AND SENHA_usuario = md5(?)";
-
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setString(1, usu.getLogin());
             preparar.setString(2, usu.getSenha());

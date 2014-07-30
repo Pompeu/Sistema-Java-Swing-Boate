@@ -15,6 +15,8 @@
  */
 package com.solutions.pompeu.model;
 
+import com.solutions.pompeu.jdbc.Conectar;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         long vendaID = 0;
         String sql = "SELECT MAX(VENDA_ID) FROM VENDAS_CARTAO_CONS";
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             ResultSet resultado = preparar.executeQuery();
             while (resultado.next()) {
@@ -61,7 +64,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "INSERT INTO VENDAS_CARTAO_CONS(VENDA_ID,DATA_VENDA)"
                 + "VALUES (?,NOW())";
         try {
-
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, venda_id);
             preparar.execute();
@@ -82,12 +85,12 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "INSERT INTO CARTOES(CARTAO_ID , SALDO_CARTAO) VALUES(?,?)";
 
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, cartao.getCartao_id());
             preparar.setDouble(2, cartao.getSaldo());
             preparar.execute();
             preparar.close();
-            con.close();
             JOptionPane.showMessageDialog(null, "Cartão cadastrado com Sucesso !!!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -112,6 +115,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "SELECT * FROM USUARIO_CARTAO WHERE CARTAO_ID = ?";
 
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, numero);
             ResultSet resultado = preparar.executeQuery();
@@ -121,8 +125,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
                 usuario.setUsuario_id(resultado.getLong("usuario_id"));
                 cartaoUsuario.put(cartao, usuario);
             }
-            preparar.close();
-            con.close();
+            preparar.close();            
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -140,6 +143,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "UPDATE CARTOES SET SALDO_CARTAO = ? WHERE CARTAO_ID = ?";
 
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setDouble(1, cartao.getSaldo());
             preparar.setLong(2, cartao.getCartao_id());
@@ -160,11 +164,11 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "DELETE FROM CARTOES WHERE CARTAO_ID = ?";
 
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, cartao.getCartao_id());
             preparar.execute();
             preparar.close();
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -184,6 +188,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "SELECT * FROM CARTOES WHERE CARTAO_ID = ?";
 
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, id);
             ResultSet resultado = preparar.executeQuery();
@@ -206,6 +211,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "SELECT * FROM CARTOES ORDER BY CARTAO_ID";
 
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             ResultSet resultado = preparar.executeQuery();
 
@@ -234,6 +240,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
                 + "VALUES(?,?,?)";
 
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, prod_id);
             preparar.setLong(2, venda_id);
@@ -260,6 +267,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "SELECT * FROM PROD_MOV WHERE  PRODUTO_ID = ? AND VENDA_ID = ?";
 
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, produto_id);
             preparar.setLong(2, venda_id);
@@ -290,6 +298,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "UPDATE PROD_MOV SET QUANT_PROD = ?"
                 + "WHERE PROD_MOV_ID = ?";
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setInt(1, quant);
             preparar.setLong(2, prodModId);
@@ -310,6 +319,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
 
         String sql = "DELETE FROM PROD_MOV WHERE VENDA_ID  = ? AND PRODUTO_ID = ?";
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setLong(1, venda_id);
             preparar.setLong(2, prod_id);
@@ -331,6 +341,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
         String sql = "UPDATE VENDAS_CARTAO_CONS SET TOTAL_VENDA_CARTAO = ? , CARTAO_ID = ?"
                 + "WHERE VENDA_ID = ?";
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             preparar.setDouble(1, total);
             preparar.setLong(2, cartao_id);
@@ -338,8 +349,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
             preparar.execute();
             int finaliza = JOptionPane.showConfirmDialog(null, "Confimar a Venda ?");
             if (finaliza == 0) {
-                preparar.close();
-                con.close();
+                preparar.close();                
             } else {
                 /*Caso a a reposta da Mensagem Diago for não ou cancelar
                  a venda sera deletada*/
@@ -362,7 +372,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
 
         if (total == 0) {
             try {
-
+                Connection con = Conectar.getInstance().conect();
                 preparar = con.prepareStatement(sql);
                 preparar.setLong(1, venda_id);
                 preparar.setLong(2, venda_id);
@@ -387,6 +397,7 @@ public class CartaoConsumacaoDAO extends UsuarioDAO {
 
         String sql = "SELECT * FROM CARTOES WHERE CARTAO_ID = ?";
         try {
+            Connection con = Conectar.getInstance().conect();
             preparar = con.prepareStatement(sql);
             //passando numero do cartão que vem do argumento
             preparar.setLong(1, numero);

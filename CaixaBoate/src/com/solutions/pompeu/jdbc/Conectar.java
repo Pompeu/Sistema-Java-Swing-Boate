@@ -18,6 +18,8 @@ package com.solutions.pompeu.jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,30 +28,43 @@ import javax.swing.JOptionPane;
  */
 public class Conectar {
 
-    private static Conectar c = null;
-
-    private Conectar() {
-
+    private static final Conectar instace = new Conectar();
+    
+    private Connection con;
+    
+    private Conectar() { 
     }
 
     public static Conectar getInstance() {
-        if (c == null) {
-            c = new Conectar();
-        }
-        return c;
+        return instace;
     }
 
     public Connection conect() {
-
-        Connection con = null;
-        try {
-            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cartao", "postgres",
-                    "1234");
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+        conexao();
         return con;
     }
 
+    private void conexao() {
+        if (con != null) {
+            return;
+        }
+        try {
+            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/cartao",
+                    "postgres", "1234");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void diconnect() {
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+                Logger.getLogger(Conectar.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        con = null;
+    }
 }

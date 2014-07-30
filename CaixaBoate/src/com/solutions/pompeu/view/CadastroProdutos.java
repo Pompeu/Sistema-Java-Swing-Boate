@@ -39,7 +39,6 @@ public class CadastroProdutos extends MainClassAbstract {
      */
     private CadastroProdutos() {
         initComponents();
-        limparcampos();
         this.setLocationRelativeTo(null);
     }
 
@@ -72,6 +71,7 @@ public class CadastroProdutos extends MainClassAbstract {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        iMenssage = new javax.swing.JLabel();
         jpAcao = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnalterar = new javax.swing.JButton();
@@ -83,6 +83,11 @@ public class CadastroProdutos extends MainClassAbstract {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Produtos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jpNavegacao.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 153, 102), new java.awt.Color(102, 255, 102)));
 
@@ -171,6 +176,8 @@ public class CadastroProdutos extends MainClassAbstract {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Valor");
 
+        iMenssage.setForeground(java.awt.Color.red);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -186,8 +193,11 @@ public class CadastroProdutos extends MainClassAbstract {
                     .addComponent(tfNome)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(78, 78, 78)
+                                .addComponent(iMenssage)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -203,7 +213,8 @@ public class CadastroProdutos extends MainClassAbstract {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(iMenssage))
                 .addGap(18, 18, 18)
                 .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -373,6 +384,11 @@ public class CadastroProdutos extends MainClassAbstract {
         abilitaDesabilitaBnt(false);
     }//GEN-LAST:event_btnNovoActionPerformed
 
+    /**
+     * esse evento do botão salva alterações ou gera um novo cadastro
+     *
+     * @param evt
+     */
     private void btnalterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnalterarActionPerformed
 
         double valor = 0.00;
@@ -381,20 +397,23 @@ public class CadastroProdutos extends MainClassAbstract {
             valor = Double.parseDouble(tfValor.getText());
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Valor Invalido");
+            iMenssage.setText("Valor Invalido");
             tfValor.setText(null);
         }
         String nome = tfNome.getText();
-
-        ProdutoDAO pd = new ProdutoDAO();
-        Produto produto = new Produto(nome, valor);
-        pd.cadProduto(produto);
-
+        if (nome.equals("") && valor < 1) {
+            iMenssage.setText("Campos brancos ou invalidos");
+        } else {
+            ProdutoDAO pd = new ProdutoDAO();
+            Produto produto = new Produto(nome, valor);
+            pd.cadProduto(produto);
+        }
         abilitaDesabilitaBnt(true);
     }//GEN-LAST:event_btnalterarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         abilitaDesabilitaBnt(true);
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -406,12 +425,11 @@ public class CadastroProdutos extends MainClassAbstract {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         if (id < 1) {
-            JOptionPane.showMessageDialog(this, "Código Nulo");
+            iMenssage.setText("Código Nulo");
         } else {
             ProdutoDAO pd = new ProdutoDAO();
             Produto produto = new Produto(id);
             pd.excluirProdutos(produto);
-
         }
         abilitaDesabilitaBnt(true);
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -420,16 +438,16 @@ public class CadastroProdutos extends MainClassAbstract {
         // TODO add your handling code here:
         ProdutoDAO pdao = new ProdutoDAO();
         List<Produto> lista = pdao.buscarProdutos();
-
         int j = i;
         try {
             tfId.setText(String.valueOf(lista.get(j).getProduto_id()));
             tfNome.setText(lista.get(j).getNome());
             tfValor.setText(String.valueOf(nf.format(lista.get(j).getPreco())));
         } catch (IndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Acabou os Produtos");
+            iMenssage.setText("Acabou os Produtos");
             i--;
         }
+        //tamanho da lista recebe ela -1 pra ter presisão no tamanhao da lista
         sizelist = lista.size() - 1;
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
@@ -457,6 +475,9 @@ public class CadastroProdutos extends MainClassAbstract {
         i = sizelist;
         btnPesquisarActionPerformed(evt);
     }//GEN-LAST:event_bntFinalListActionPerformed
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        limparcampos();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -512,7 +533,8 @@ public class CadastroProdutos extends MainClassAbstract {
          }*/
 
     }
-    private void limparcampos(){
+
+    private void limparcampos() {
         tfId.setText(null);
         tfNome.setText(null);
         tfValor.setText(null);
@@ -527,6 +549,7 @@ public class CadastroProdutos extends MainClassAbstract {
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnalterar;
+    private javax.swing.JLabel iMenssage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
